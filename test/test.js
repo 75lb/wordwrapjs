@@ -5,4 +5,4 @@ var wrap = require("../");
 //
 // });
 
-console.log(wrap("get me do playa? gets? i don't think you do. "));
+console.dir(wrap("75lb", { width: 3} ));
