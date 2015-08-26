@@ -1,0 +1,30 @@
+{
+  "name": "word-wrap-x",
+  "author": "Lloyd Brookes <75pound@gmail.com>",
+  "version": "0.0.0",
+  "description": "word-wrap-x",
+  "repository": "https://github.com/75lb/word-wrap-x.git",
+  "license": "MIT",
+  "main": "./lib/word-wrap-x.js",
+  "bin": {
+    "word-wrap-x": "bin/cli.js"
+  },
+  "keywords": [
+    "word",
+    "wrap",
+    "text",
+    "columns"
+  ],
+  "engines": {
+    "node": ">=0.10.0"
+  },
+  "scripts": {
+    "test": "tape test/*.js",
+    "lint": "jshint lib/*.js bin/*.js test/*.js; echo",
+    "docs": "jsdoc2md -t jsdoc2md/README.hbs lib/*.js > README.md; echo"
+  },
+  "devDependencies": {
+    "jsdoc-to-markdown": "^1.1.1",
+    "tape": "^4.2.0"
+  }
+}
