@@ -1,13 +1,13 @@
 {
-  "name": "word-wrap-x",
+  "name": "wordwrapjs",
   "author": "Lloyd Brookes <75pound@gmail.com>",
   "version": "0.0.0",
-  "description": "word-wrap-x",
-  "repository": "https://github.com/75lb/word-wrap-x.git",
+  "description": "wordwrapjs",
+  "repository": "https://github.com/75lb/wordwrapjs.git",
   "license": "MIT",
-  "main": "./lib/word-wrap-x.js",
+  "main": "./lib/wordwrapjs.js",
   "bin": {
-    "word-wrap-x": "bin/cli.js"
+    "wordwrapjs": "bin/cli.js"
   },
   "keywords": [
     "word",

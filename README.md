@@ -1,15 +1,15 @@
-[![view on npm](http://img.shields.io/npm/v/word-wrap-x.svg)](https://www.npmjs.org/package/word-wrap-x)
-[![npm module downloads per month](http://img.shields.io/npm/dm/word-wrap-x.svg)](https://www.npmjs.org/package/word-wrap-x)
-[![Build Status](https://travis-ci.org/75lb/word-wrap-x.svg?branch=master)](https://travis-ci.org/75lb/word-wrap-x)
-[![Dependency Status](https://david-dm.org/75lb/word-wrap-x.svg)](https://david-dm.org/75lb/word-wrap-x)
+[![view on npm](http://img.shields.io/npm/v/wordwrapjs.svg)](https://www.npmjs.org/package/wordwrapjs)
+[![npm module downloads per month](http://img.shields.io/npm/dm/wordwrapjs.svg)](https://www.npmjs.org/package/wordwrapjs)
+[![Build Status](https://travis-ci.org/75lb/wordwrapjs.svg?branch=master)](https://travis-ci.org/75lb/wordwrapjs)
+[![Dependency Status](https://david-dm.org/75lb/wordwrapjs.svg)](https://david-dm.org/75lb/wordwrapjs)
 
-<a name="module_word-wrap-x"></a>
-## word-wrap-x
+<a name="module_wordwrapjs"></a>
+## wordwrapjs
 Word wrapping, with a few features.
 
-<a name="module_word-wrap-x..wrap"></a>
-### word-wrap-x~wrap(text, options)
-**Kind**: inner method of <code>[word-wrap-x](#module_word-wrap-x)</code>  
+<a name="module_wordwrapjs..wrap"></a>
+### wordwrapjs~wrap(text, options)
+**Kind**: inner method of <code>[wordwrapjs](#module_wordwrapjs)</code>  
 
 | Param | Type |
 | --- | --- |
