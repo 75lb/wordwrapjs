@@ -26,5 +26,8 @@
   "devDependencies": {
     "jsdoc-to-markdown": "^1.1.1",
     "tape": "^4.2.0"
+  },
+  "dependencies": {
+    "array-back": "^1.0.2"
   }
 }
