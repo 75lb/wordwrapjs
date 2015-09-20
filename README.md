@@ -5,16 +5,20 @@
 
 <a name="module_wordwrapjs"></a>
 ## wordwrapjs
-Word wrapping, with a few features.
+Word wrapping, with a few features. Namely the capability to ignore certain text patterns when wrapping (e.g. to prevent ansi escape sequences breaking layout in the terminal.)
 
 **Example**  
+Wrap some sick bars in a 20 character column.
+
 ```js
 > wrap = require("wordwrapjs")
 
-> rap = "I'm rapping. I'm rapping. I'm rap rap rapping. I'm rap rap rap rap rappity rapping."
-> result = wrap(rap, { width: 20 })
+> bars = "I'm rapping. I'm rapping. I'm rap rap rapping. I'm rap rap rap rap rappity rapping."
+> result = wrap(bars, { width: 20 })
+```
 
-> console.log(result);
+`result` now looks like this:
+```
 I'm rapping. I'm
 rapping. I'm rap rap
 rapping. I'm rap rap
@@ -29,9 +33,9 @@ rapping.
 | --- | --- | --- | --- |
 | text | <code>string</code> |  | the input text to wrap |
 | [options] | <code>object</code> |  | optional config |
-| [options.width] | <code>number</code> | <code>30</code> | the max line-width in characters |
+| [options.width] | <code>number</code> | <code>30</code> | the max column width in characters |
 | [options.ignore] | <code>RegExp</code> &#124; <code>Array.&lt;RegExp&gt;</code> |  | one or more patterns to be ignored when sizing the newly wrapped lines. For example `ignore: /\u001b.*?m/g` will ignore unprintable ansi escape sequences. |
-| [options.newLine] | <code>string</code> | <code>&quot;\\n&quot;</code> | the desired new line character to use. |
+| [options.newLine] | <code>string</code> | <code>&quot;os.EOL&quot;</code> | the desired new line character to use, defaults to [os.EOL](https://nodejs.org/api/os.html#os_os_eol). |
 
 
 * * *
