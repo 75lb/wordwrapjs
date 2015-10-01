@@ -2,6 +2,7 @@
 [![npm module downloads per month](http://img.shields.io/npm/dm/wordwrapjs.svg)](https://www.npmjs.org/package/wordwrapjs)
 [![Build Status](https://travis-ci.org/75lb/wordwrapjs.svg?branch=master)](https://travis-ci.org/75lb/wordwrapjs)
 [![Dependency Status](https://david-dm.org/75lb/wordwrapjs.svg)](https://david-dm.org/75lb/wordwrapjs)
+[![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](https://github.com/feross/standard)
 
 <a name="module_wordwrapjs"></a>
 ## wordwrapjs
