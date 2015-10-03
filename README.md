@@ -52,7 +52,7 @@ returns the wrapped output as an array of lines, rather than a single string
 | Param | Type | Description |
 | --- | --- | --- |
 | text | <code>string</code> | the input text to wrap |
-| [options] | <code>object</code> | same options as [wordwrapjs](#module_wordwrapjs) |
+| [options] | <code>object</code> | same options as [wrap](#module_wordwrapjs) |
 
 **Example**  
 ```js
