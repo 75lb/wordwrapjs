@@ -27,6 +27,16 @@ test('ignore', function (t) {
   t.end()
 })
 
+test('wrap.lines', function (t) {
+  t.deepEqual(
+    wrap.lines(bars),
+    [ "I'm rapping. I'm rapping. I'm",
+      "rap rap rapping. I'm rap rap",
+      "rap rap rappity rapping." ]
+  )
+  t.end()
+})
+
 test('wrap.lines, width', function (t) {
   t.deepEqual(
     wrap.lines(bars, { width: 3 }),

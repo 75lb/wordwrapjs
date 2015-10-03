@@ -29,7 +29,7 @@ rapping.
 
 * [wordwrapjs](#module_wordwrapjs)
   * [wrap(text, [options])](#exp_module_wordwrapjs--wrap) ⇒ <code>string</code> ⏏
-    * [.lines()](#module_wordwrapjs--wrap.lines) ⇒ <code>Array</code>
+    * [.lines(text, [options])](#module_wordwrapjs--wrap.lines) ⇒ <code>Array</code>
 
 <a name="exp_module_wordwrapjs--wrap"></a>
 ### wrap(text, [options]) ⇒ <code>string</code> ⏏
@@ -41,13 +41,27 @@ rapping.
 | [options] | <code>object</code> |  | optional config |
 | [options.width] | <code>number</code> | <code>30</code> | the max column width in characters |
 | [options.ignore] | <code>RegExp</code> &#124; <code>Array.&lt;RegExp&gt;</code> |  | one or more patterns to be ignored when sizing the newly wrapped lines. For example `ignore: /\u001b.*?m/g` will ignore unprintable ansi escape sequences. |
-| [options.eos] | <code>string</code> | <code>&quot;os.EOL&quot;</code> | the desired new line character to use, defaults to [os.EOL](https://nodejs.org/api/os.html#os_os_eol). |
+| [options.eol] | <code>string</code> | <code>&quot;os.EOL&quot;</code> | the desired new line character to use, defaults to [os.EOL](https://nodejs.org/api/os.html#os_os_eol). |
 
 <a name="module_wordwrapjs--wrap.lines"></a>
-#### wrap.lines() ⇒ <code>Array</code>
+#### wrap.lines(text, [options]) ⇒ <code>Array</code>
 returns the wrapped output as an array of lines, rather than a single string
 
 **Kind**: static method of <code>[wrap](#exp_module_wordwrapjs--wrap)</code>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| text | <code>string</code> | the input text to wrap |
+| [options] | <code>object</code> | same options as [wordwrapjs](#module_wordwrapjs) |
+
+**Example**  
+```js
+> bars = "I'm rapping. I'm rapping. I'm rap rap rapping. I'm rap rap rap rap rappity rapping."
+> wrap.lines(bars)
+[ "I'm rapping. I'm rapping. I'm",
+  "rap rap rapping. I'm rap rap",
+  "rap rap rappity rapping." ]
+```
 
 * * *
 
