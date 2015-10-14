@@ -58,3 +58,11 @@ test('wrap.lines, width', function (t) {
   )
   t.end()
 })
+
+test('wrap.lines, width smaller than content width', function (t) {
+  t.deepEqual(
+    wrap.lines('4444', { width: 3 }),
+    [ '4444' ]
+  )
+  t.end()
+})
