@@ -28,6 +28,7 @@
     "tape": "^4.2.0"
   },
   "dependencies": {
-    "array-back": "^1.0.2"
+    "array-back": "^1.0.2",
+    "typical": "^2.3.2"
   }
 }
