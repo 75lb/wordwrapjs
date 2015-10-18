@@ -64,5 +64,26 @@ test('wrap.lines, width smaller than content width', function (t) {
     wrap.lines('4444', { width: 3 }),
     [ '4444' ]
   )
+  t.deepEqual(
+    wrap.lines('onetwothreefour fivesixseveneight', { width: 7 }),
+    [ 'onetwothreefour', 'fivesixseveneight' ]
+  )
+
+  t.end()
+})
+
+test('wrap.lines, break', function (t) {
+  t.deepEqual(
+    wrap.lines('onetwothreefour', { width: 7, break: true }),
+    [ 'onetwot', 'hreefou', 'r' ]
+  )
+  t.deepEqual(
+    wrap.lines(
+      'onetwothreefour fivesixseveneight',
+      { width: 7, break: true }
+    ),
+    [ 'onetwot', 'hreefou', 'r', 'fivesix', 'sevenei', 'ght' ]
+  )
+
   t.end()
 })
