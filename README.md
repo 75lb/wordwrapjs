@@ -1,12 +1,12 @@
 [![view on npm](http://img.shields.io/npm/v/wordwrapjs.svg)](https://www.npmjs.org/package/wordwrapjs)
-[![npm module downloads per month](http://img.shields.io/npm/dm/wordwrapjs.svg)](https://www.npmjs.org/package/wordwrapjs)
+[![npm module downloads](http://img.shields.io/npm/dt/wordwrapjs.svg)](https://www.npmjs.org/package/wordwrapjs)
 [![Build Status](https://travis-ci.org/75lb/wordwrapjs.svg?branch=master)](https://travis-ci.org/75lb/wordwrapjs)
 [![Dependency Status](https://david-dm.org/75lb/wordwrapjs.svg)](https://david-dm.org/75lb/wordwrapjs)
 [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](https://github.com/feross/standard)
 
 <a name="module_wordwrapjs"></a>
 ## wordwrapjs
-Word wrapping, with a few features. Namely the capability to ignore certain text patterns when wrapping (e.g. to prevent ansi escape sequences breaking layout in the terminal.)
+Word wrapping, with a few options.
 
 **Example**  
 Wrap some sick bars in a 20 character column.
@@ -27,6 +27,17 @@ rap rap rappity
 rapping.
 ```
 
+By default, long words will not break. Unless you insist.
+```js
+> url = "https://github.com/75lb/wordwrapjs"
+
+> wrap.lines(url, { width: 18 })
+[ 'https://github.com/75lb/wordwrapjs' ]
+
+> wrap.lines(url, { width: 18, break: true })
+[ 'https://github.com', '/75lb/wordwrapjs' ]
+```
+
 * [wordwrapjs](#module_wordwrapjs)
   * [wrap(text, [options])](#exp_module_wordwrapjs--wrap) ⇒ <code>string</code> ⏏
     * [.lines(text, [options])](#module_wordwrapjs--wrap.lines) ⇒ <code>Array</code>
@@ -41,6 +52,7 @@ rapping.
 | [options] | <code>object</code> |  | optional config |
 | [options.width] | <code>number</code> | <code>30</code> | the max column width in characters |
 | [options.ignore] | <code>RegExp</code> &#124; <code>Array.&lt;RegExp&gt;</code> |  | one or more patterns to be ignored when sizing the newly wrapped lines. For example `ignore: /\u001b.*?m/g` will ignore unprintable ansi escape sequences. |
+| [options.break] | <code>boolean</code> |  | if true, words exceeding the specified `width` will be forcefully broken |
 | [options.eol] | <code>string</code> | <code>&quot;os.EOL&quot;</code> | the desired new line character to use, defaults to [os.EOL](https://nodejs.org/api/os.html#os_os_eol). |
 
 <a name="module_wordwrapjs--wrap.lines"></a>
