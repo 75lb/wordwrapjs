@@ -87,3 +87,41 @@ test('wrap.lines, break', function (t) {
 
   t.end()
 })
+
+test('wrap.lines(text): respect existing linebreaks', function (t) {
+  t.deepEqual(
+    wrap.lines('one\ntwo three four', { width: 8 }),
+    [ 'one', 'two', 'three', 'four' ]
+  )
+
+  t.deepEqual(
+    wrap.lines('one \n \n two three four', { width: 8 }),
+    [ 'one', '', 'two', 'three', 'four' ]
+  )
+
+  t.deepEqual(
+    wrap.lines('one\rtwo three four', { width: 8 }),
+    [ 'one', 'two', 'three', 'four' ]
+  )
+
+  t.deepEqual(
+    wrap.lines('one\r\ntwo three four', { width: 8 }),
+    [ 'one', 'two', 'three', 'four' ]
+  )
+
+  t.end()
+})
+
+test('wrap.lines(text): multilingual', function (t) {
+  t.deepEqual(
+    wrap.lines('Può parlare più lentamente?', { width: 10 }),
+    [ 'Può', 'parlare', 'più', 'lentamente?' ]
+  )
+
+  t.deepEqual(
+    wrap.lines('один два три', { width: 4 }),
+    [ 'один', 'два', 'три' ]
+  )
+
+  t.end()
+})

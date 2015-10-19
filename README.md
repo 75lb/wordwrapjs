@@ -8,6 +8,10 @@
 ## wordwrapjs
 Word wrapping, with a few options.
 
+- multilingual - wraps any language using whitespace word separation.
+- force-break long words
+- ignore patterns (e.g. ansi escape sequences)
+
 **Example**  
 Wrap some sick bars in a 20 character column.
 
