@@ -78,6 +78,10 @@ test('wrap.lines, break', function (t) {
     [ 'onetwot', 'hreefou', 'r' ]
   )
   t.deepEqual(
+    wrap.lines('\u001b[4m--------\u001b[0m', { width: 10, break: true, ignore: /\u001b.*?m/g }),
+    [ '\u001b[4m--------\u001b[0m' ]
+  )
+  t.deepEqual(
     wrap.lines(
       'onetwothreefour fivesixseveneight',
       { width: 7, break: true }
