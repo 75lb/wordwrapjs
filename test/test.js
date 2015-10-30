@@ -129,3 +129,34 @@ test('wrap.lines(text): multilingual', function (t) {
 
   t.end()
 })
+
+test('wrap hyphenated words', function (t) {
+  t.deepEqual(
+    wrap.lines('ones-and-twos', { width: 5 }),
+    [ 'ones-', 'and-', 'twos' ]
+  )
+
+  t.deepEqual(
+    wrap.lines('ones-and-twos', { width: 10 }),
+    [ 'ones-and-', 'twos' ]
+  )
+
+  t.deepEqual(
+    wrap.lines('--------', { width: 5 }),
+    [ '--------' ]
+  )
+
+  t.deepEqual(
+    wrap.lines('--one --fifteen', { width: 5 }),
+    [ '--one', '--fifteen' ]
+  )
+
+  t.end()
+})
+
+test('isWrappable(input)', function(t){
+  t.strictEqual(wrap.isWrappable('one two'), true)
+  t.strictEqual(wrap.isWrappable('one-two'), true)
+  t.strictEqual(wrap.isWrappable('one\ntwo'), true)
+  t.end()
+})

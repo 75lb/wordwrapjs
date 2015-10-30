@@ -6,11 +6,12 @@
 
 <a name="module_wordwrapjs"></a>
 ## wordwrapjs
-Word wrapping, with a few options.
+Word wrapping, with a few features.
 
 - multilingual - wraps any language using whitespace word separation.
-- force-break long words
-- ignore patterns (e.g. ansi escape sequences)
+- force-break option
+- ignore pattern option (e.g. ansi escape sequences)
+- wraps hypenated words
 
 **Example**  
 Wrap some sick bars in a 20 character column.
