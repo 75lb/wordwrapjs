@@ -151,6 +151,11 @@ test('wrap hyphenated words', function (t) {
     [ '--one', '--fifteen' ]
   )
 
+  t.deepEqual(
+    wrap.lines('one-two', { width: 10 }),
+    [ 'one-two' ]
+  )
+
   t.end()
 })
 
