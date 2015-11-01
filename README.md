@@ -46,6 +46,8 @@ By default, long words will not break. Unless you insist.
 * [wordwrapjs](#module_wordwrapjs)
   * [wrap(text, [options])](#exp_module_wordwrapjs--wrap) ⇒ <code>string</code> ⏏
     * [.lines(text, [options])](#module_wordwrapjs--wrap.lines) ⇒ <code>Array</code>
+    * [.isWrappable(text)](#module_wordwrapjs--wrap.isWrappable) ⇒ <code>boolean</code>
+    * [.getWords(text)](#module_wordwrapjs--wrap.getWords) ⇒ <code>Array.&lt;string&gt;</code>
 
 <a name="exp_module_wordwrapjs--wrap"></a>
 ### wrap(text, [options]) ⇒ <code>string</code> ⏏
@@ -79,6 +81,26 @@ returns the wrapped output as an array of lines, rather than a single string
   "rap rap rapping. I'm rap rap",
   "rap rap rappity rapping." ]
 ```
+<a name="module_wordwrapjs--wrap.isWrappable"></a>
+#### wrap.isWrappable(text) ⇒ <code>boolean</code>
+Returns true if the input text is wrappable
+
+**Kind**: static method of <code>[wrap](#exp_module_wordwrapjs--wrap)</code>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| text | <code>string</code> | input text |
+
+<a name="module_wordwrapjs--wrap.getWords"></a>
+#### wrap.getWords(text) ⇒ <code>Array.&lt;string&gt;</code>
+Splits the input text returning an array of words
+
+**Kind**: static method of <code>[wrap](#exp_module_wordwrapjs--wrap)</code>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| text | <code>string</code> | input text |
+
 
 * * *
 
