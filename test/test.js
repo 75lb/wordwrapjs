@@ -156,6 +156,11 @@ test('wrap hyphenated words', function (t) {
     [ 'one-two' ]
   )
 
+  t.deepEqual(
+    wrap.lines('ansi-escape-sequences', { width: 22 }),
+    [ 'ansi-escape-sequences' ]
+  )
+
   t.end()
 })
 
