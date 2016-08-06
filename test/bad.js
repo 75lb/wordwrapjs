@@ -1,14 +1,15 @@
-var test = require('tape')
+'use strict'
+var test = require('test-runner')
 var wrap = require('../')
+var a = require('core-assert')
 
-test('non-string input', function (t) {
-  t.strictEqual(wrap(undefined), '')
-  t.strictEqual(wrap(function () {}), 'function () {}')
-  t.strictEqual(wrap({}), '[object Object]')
-  t.strictEqual(wrap(null), 'null')
-  t.strictEqual(wrap(true), 'true')
-  t.strictEqual(wrap(0), '0')
-  t.strictEqual(wrap(NaN), 'NaN')
-  t.strictEqual(wrap(Infinity), 'Infinity')
-  t.end()
+test('non-string input', function () {
+  a.strictEqual(wrap(undefined), '')
+  a.strictEqual(wrap(function () {}), 'function () {}')
+  a.strictEqual(wrap({}), '[object Object]')
+  a.strictEqual(wrap(null), 'null')
+  a.strictEqual(wrap(true), 'true')
+  a.strictEqual(wrap(0), '0')
+  a.strictEqual(wrap(NaN), 'NaN')
+  a.strictEqual(wrap(Infinity), 'Infinity')
 })

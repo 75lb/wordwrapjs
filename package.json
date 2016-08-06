@@ -6,9 +6,6 @@
   "repository": "https://github.com/75lb/wordwrapjs.git",
   "license": "MIT",
   "main": "./lib/wordwrapjs.js",
-  "bin": {
-    "wordwrapjs": "bin/cli.js"
-  },
   "keywords": [
     "word",
     "line",
@@ -20,15 +17,16 @@
     "node": ">=0.10.0"
   },
   "scripts": {
-    "test": "tape test/*.js",
+    "test": "test-runner test/*.js",
     "docs": "jsdoc2md -t jsdoc2md/README.hbs lib/*.js > README.md; echo"
   },
   "devDependencies": {
-    "jsdoc-to-markdown": "^1.1.1",
-    "tape": "^4.2.0"
+    "core-assert": "^0.2.0",
+    "jsdoc-to-markdown": "^2.0.0-alpha",
+    "test-runner": "~0.1.9"
   },
   "dependencies": {
-    "array-back": "^1.0.2",
-    "typical": "^2.3.2"
+    "array-back": "^1.0.3",
+    "typical": "^2.5.0"
   }
 }
