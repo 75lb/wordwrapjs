@@ -1,32 +1,33 @@
 'use strict'
-var test = require('test-runner')
+var TestRunner = require('test-runner')
 var wrap = require('../')
 var a = require('core-assert')
 
+var runner = new TestRunner()
 var bars = "I'm rapping. I'm rapping. I'm rap rap rapping. I'm rap rap rap rap rappity rapping."
 
-test('simple', function () {
+runner.test('simple', function () {
   a.strictEqual(
     wrap(bars),
     "I'm rapping. I'm rapping. I'm\nrap rap rapping. I'm rap rap\nrap rap rappity rapping."
   )
 })
 
-test('width', function () {
+runner.test('width', function () {
   a.strictEqual(
     wrap(bars, { width: 3 }),
     "I'm\nrapping.\nI'm\nrapping.\nI'm\nrap\nrap\nrapping.\nI'm\nrap\nrap\nrap\nrap\nrappity\nrapping."
   )
 })
 
-test('ignore', function () {
+runner.test('ignore', function () {
   a.strictEqual(
     wrap(bars, { ignore: "I'm" }),
     "I'm rapping. I'm rapping. I'm rap rap\nrapping. I'm rap rap rap rap\nrappity rapping."
   )
 })
 
-test('wrap.lines', function () {
+runner.test('wrap.lines', function () {
   a.deepEqual(
     wrap.lines(bars),
     [ "I'm rapping. I'm rapping. I'm",
@@ -35,7 +36,7 @@ test('wrap.lines', function () {
   )
 })
 
-test('wrap.lines, width', function () {
+runner.test('wrap.lines, width', function () {
   a.deepEqual(
     wrap.lines(bars, { width: 3 }),
     [ "I'm",
@@ -56,7 +57,7 @@ test('wrap.lines, width', function () {
   )
 })
 
-test('wrap.lines, width smaller than content width', function () {
+runner.test('wrap.lines, width smaller than content width', function () {
   a.deepEqual(
     wrap.lines('4444', { width: 3 }),
     [ '4444' ]
@@ -65,10 +66,9 @@ test('wrap.lines, width smaller than content width', function () {
     wrap.lines('onetwothreefour fivesixseveneight', { width: 7 }),
     [ 'onetwothreefour', 'fivesixseveneight' ]
   )
-
 })
 
-test('wrap.lines, break', function () {
+runner.test('wrap.lines, break', function () {
   a.deepEqual(
     wrap.lines('onetwothreefour', { width: 7, break: true }),
     [ 'onetwot', 'hreefou', 'r' ]
@@ -84,10 +84,9 @@ test('wrap.lines, break', function () {
     ),
     [ 'onetwot', 'hreefou', 'r', 'fivesix', 'sevenei', 'ght' ]
   )
-
 })
 
-test('wrap.lines(text): respect existing linebreaks', function () {
+runner.test('wrap.lines(text): respect existing linebreaks', function () {
   a.deepEqual(
     wrap.lines('one\ntwo three four', { width: 8 }),
     [ 'one', 'two', 'three', 'four' ]
@@ -107,10 +106,9 @@ test('wrap.lines(text): respect existing linebreaks', function () {
     wrap.lines('one\r\ntwo three four', { width: 8 }),
     [ 'one', 'two', 'three', 'four' ]
   )
-
 })
 
-test('wrap.lines(text): multilingual', function () {
+runner.test('wrap.lines(text): multilingual', function () {
   a.deepEqual(
     wrap.lines('Può parlare più lentamente?', { width: 10 }),
     [ 'Può', 'parlare', 'più', 'lentamente?' ]
@@ -120,10 +118,9 @@ test('wrap.lines(text): multilingual', function () {
     wrap.lines('один два три', { width: 4 }),
     [ 'один', 'два', 'три' ]
   )
-
 })
 
-test('wrap hyphenated words', function () {
+runner.test('wrap hyphenated words', function () {
   a.deepEqual(
     wrap.lines('ones-and-twos', { width: 5 }),
     [ 'ones-', 'and-', 'twos' ]
@@ -154,9 +151,13 @@ test('wrap hyphenated words', function () {
     [ 'ansi-escape-sequences' ]
   )
 
+  a.deepEqual(
+    wrap.lines('one - two'),
+    [ 'one - two' ]
+  )
 })
 
-test('isWrappable(input)', function(t){
+runner.test('isWrappable(input)', function () {
   a.strictEqual(wrap.isWrappable('one two'), true)
   a.strictEqual(wrap.isWrappable('one-two'), true)
   a.strictEqual(wrap.isWrappable('one\ntwo'), true)

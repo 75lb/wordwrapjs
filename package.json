@@ -21,12 +21,12 @@
     "docs": "jsdoc2md -t jsdoc2md/README.hbs lib/*.js > README.md; echo"
   },
   "devDependencies": {
-    "core-assert": "^0.2.0",
-    "jsdoc-to-markdown": "^2.0.0-alpha",
-    "test-runner": "~0.1.9"
+    "core-assert": "^0.2.1",
+    "jsdoc-to-markdown": "^2.0.1",
+    "test-runner": "~0.2.5"
   },
   "dependencies": {
     "array-back": "^1.0.3",
-    "typical": "^2.5.0"
+    "typical": "^2.6.0"
   }
 }

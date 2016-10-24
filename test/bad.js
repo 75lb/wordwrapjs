@@ -1,9 +1,11 @@
 'use strict'
-var test = require('test-runner')
+var TestRunner = require('test-runner')
 var wrap = require('../')
 var a = require('core-assert')
 
-test('non-string input', function () {
+var runner = new TestRunner()
+
+runner.test('non-string input', function () {
   a.strictEqual(wrap(undefined), '')
   a.strictEqual(wrap(function () {}), 'function () {}')
   a.strictEqual(wrap({}), '[object Object]')
