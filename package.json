@@ -27,6 +27,7 @@
   },
   "dependencies": {
     "array-back": "^1.0.3",
+    "reduce-flatten": "^1.0.1",
     "typical": "^2.6.0"
   }
 }

@@ -2,19 +2,20 @@
 [![npm module downloads](http://img.shields.io/npm/dt/wordwrapjs.svg)](https://www.npmjs.org/package/wordwrapjs)
 [![Build Status](https://travis-ci.org/75lb/wordwrapjs.svg?branch=master)](https://travis-ci.org/75lb/wordwrapjs)
 [![Dependency Status](https://david-dm.org/75lb/wordwrapjs.svg)](https://david-dm.org/75lb/wordwrapjs)
-[![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](https://github.com/feross/standard)
+[![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](https://github.com/feross/stan
+dard)
 
-<a name="module_wordwrapjs"></a>
+# wordwrapjs
 
-## wordwrapjs
 Word wrapping, with a few features.
 
-- multilingual - wraps any language using whitespace word separation.
+- multilingual - wraps any language using whitespace for word separation.
 - force-break option
 - ignore pattern option (e.g. ansi escape sequences)
 - wraps hypenated words
 
-**Example**  
+## Synopsis
+
 Wrap some sick bars in a 20 character column.
 
 ```js
@@ -43,6 +44,9 @@ By default, long words will not break. Unless you insist.
 > wrap.lines(url, { width: 18, break: true })
 [ 'https://github.com', '/75lb/wordwrapjs' ]
 ```
+
+## API Reference
+
 
 * [wordwrapjs](#module_wordwrapjs)
     * [wrap(text, [options])](#exp_module_wordwrapjs--wrap) ⇒ <code>string</code> ⏏

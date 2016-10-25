@@ -4,7 +4,53 @@
 [![Dependency Status](https://david-dm.org/75lb/wordwrapjs.svg)](https://david-dm.org/75lb/wordwrapjs)
 [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](https://github.com/feross/standard)
 
-{{>main}}
+# wordwrapjs
+
+Word wrapping, with a few features.
+
+- multilingual - wraps any language using whitespace for word separation.
+- force-break option
+- ignore pattern option (e.g. ansi escape sequences)
+- wraps hypenated words
+
+## Synopsis
+
+Wrap some sick bars in a 20 character column.
+
+```js
+> wrap = require('wordwrapjs')
+
+> bars = "I'm rapping. I'm rapping. I'm rap rap rapping. I'm rap rap rap rap rappity rapping."
+> result = wrap(bars, { width: 20 })
+```
+
+`result` now looks like this:
+```
+I'm rapping. I'm
+rapping. I'm rap rap
+rapping. I'm rap rap
+rap rap rappity
+rapping.
+```
+
+By default, long words will not break. Unless you insist.
+```js
+> url = "https://github.com/75lb/wordwrapjs"
+
+> wrap.lines(url, { width: 18 })
+[ 'https://github.com/75lb/wordwrapjs' ]
+
+> wrap.lines(url, { width: 18, break: true })
+[ 'https://github.com', '/75lb/wordwrapjs' ]
+```
+
+## API Reference
+
+{{#module name="wordwrapjs"}}
+{{>body~}}
+{{>member-index~}}
+{{>members~}}
+{{/module}}
 
 * * *
 
