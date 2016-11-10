@@ -1,17 +1,17 @@
 'use strict'
 var TestRunner = require('test-runner')
-var wrap = require('../')
+var TextBlock = require('../')
 var a = require('core-assert')
 
 var runner = new TestRunner()
 
 runner.test('non-string input', function () {
-  a.strictEqual(wrap(undefined), '')
-  a.strictEqual(wrap(function () {}), 'function () {}')
-  a.strictEqual(wrap({}), '[object Object]')
-  a.strictEqual(wrap(null), 'null')
-  a.strictEqual(wrap(true), 'true')
-  a.strictEqual(wrap(0), '0')
-  a.strictEqual(wrap(NaN), 'NaN')
-  a.strictEqual(wrap(Infinity), 'Infinity')
+  a.strictEqual(TextBlock.wrap(undefined), '')
+  a.strictEqual(TextBlock.wrap(function () {}), 'function () {}')
+  a.strictEqual(TextBlock.wrap({}), '[object Object]')
+  a.strictEqual(TextBlock.wrap(null), 'null')
+  a.strictEqual(TextBlock.wrap(true), 'true')
+  a.strictEqual(TextBlock.wrap(0), '0')
+  a.strictEqual(TextBlock.wrap(NaN), 'NaN')
+  a.strictEqual(TextBlock.wrap(Infinity), 'Infinity')
 })

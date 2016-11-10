@@ -20,6 +20,13 @@ runner.test('width', function () {
   )
 })
 
+runner.skip('ignore', function () {
+  a.strictEqual(
+    wrap(bars, { ignore: "I'm" }),
+    "I'm rapping. I'm rapping. I'm rap rap\nrapping. I'm rap rap rap rap\nrappity rapping."
+  )
+})
+
 runner.test('TextBlock.lines', function () {
   a.deepEqual(
     TextBlock.lines(bars),
