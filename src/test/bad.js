@@ -1,6 +1,6 @@
 'use strict'
 var TestRunner = require('test-runner')
-var TextBlock = require('../')
+var TextBlock = require('../../')
 var a = require('core-assert')
 
 var runner = new TestRunner()

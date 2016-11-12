@@ -5,7 +5,7 @@ const t = require('typical')
 /**
  * @module wordwrapjs
  */
-
+ 
 const re = {
   chunk: /[^\s-]+?-\b|\S+|\s+|\r\n?|\n/g,
   ansiEscapeSequence: /\u001b.*?m/g
@@ -80,19 +80,6 @@ class TextBlock {
     const block = new this(text, options)
     return block.toString()
   }
-
-  /**
-   * returns the wrapped output as an array of lines, rather than a single string
-   * @param {string} - the input text to wrap
-   * @param [options] {object} - same options as {@link module:wordwrapjs|wrap}
-   * @return {Array}
-   * @example
-   * > bars = "I'm rapping. I'm rapping. I'm rap rap rapping. I'm rap rap rap rap rappity rapping."
-   * > wrap.lines(bars)
-   * [ "I'm rapping. I'm rapping. I'm",
-   *   "rap rap rapping. I'm rap rap",
-   *   "rap rap rappity rapping." ]
-   */
   static lines (text, options) {
     const block = new this(text, options)
     return block.lines()
@@ -108,15 +95,6 @@ class TextBlock {
       var matches = text.match(re.chunk)
       return matches ? matches.length > 1 : false
     }
-  }
-
-  /**
-   * Splits the input text into an array of word and whitespace chunks.
-   * @param {string} - input text
-   * @returns {string[]}
-   */
-  static getWords (text) {
-    return text.match(re.chunk)
   }
 }
 
