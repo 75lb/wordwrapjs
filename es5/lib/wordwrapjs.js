@@ -93,6 +93,11 @@ var TextBlock = function () {
         return matches ? matches.length > 1 : false;
       }
     }
+  }, {
+    key: 'getWords',
+    value: function getWords(text) {
+      return text.match(re.chunk) || [];
+    }
   }]);
 
   return TextBlock;

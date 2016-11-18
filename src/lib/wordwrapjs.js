@@ -5,7 +5,7 @@ const t = require('typical')
 /**
  * @module wordwrapjs
  */
- 
+
 const re = {
   chunk: /[^\s-]+?-\b|\S+|\s+|\r\n?|\n/g,
   ansiEscapeSequence: /\u001b.*?m/g
@@ -96,6 +96,16 @@ class TextBlock {
       return matches ? matches.length > 1 : false
     }
   }
+
+  /**
+   * Splits the input text returning an array of words
+   * @param {string} - input text
+   * @returns {string[]}
+   */
+  static getWords (text) {
+    return text.match(re.chunk) || []
+  }
+
 }
 
 function trimLine (line) {
