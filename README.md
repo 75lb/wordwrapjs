@@ -19,17 +19,21 @@ Wrap some sick bars in a 20 character column.
 ```js
 > wordwrap = require('wordwrapjs')
 
-> bars = "I'm rapping. I'm rapping. I'm rap rap rapping. I'm rap rap rap rap rappity rapping."
-> result = wordwrap.wrap(bars, { width: 20 })
+> text = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
+
+> result = wordwrap.wrap(text, { width: 20 })
 ```
 
 `result` now looks like this:
 ```
-I'm rapping. I'm
-rapping. I'm rap rap
-rapping. I'm rap rap
-rap rap rappity
-rapping.
+Lorem ipsum dolor
+sit amet,
+consectetur
+adipiscing elit, sed
+do eiusmod tempor
+incididunt ut labore
+et dolore magna
+aliqua.
 ```
 
 By default, long words will not break. Unless you set the `break` option.
