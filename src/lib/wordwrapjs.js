@@ -11,10 +11,16 @@ const re = {
   ansiEscapeSequence: /\u001b.*?m/g
 }
 
-class TextBlock {
+/**
+ * @alias module:wordwrapjs
+ * @typicalname wordwrap
+ */
+class WordWrap {
+
   constructor (text, options) {
     options = options || {}
     if (!t.isDefined(text)) text = ''
+
     this._lines = String(text).split(/\r\n|\n/g)
     this.width = options.width === undefined ? 30 : options.width
     this.break = options.break
@@ -62,30 +68,38 @@ class TextBlock {
       .map(line => line.replace('~~empty~~', ''))
   }
 
-  toString () {
+  wrap () {
     return this.lines().join(os.EOL)
+  }
+
+  toString () {
+    return this.wrap()
   }
 
   /**
    * @param {string} - the input text to wrap
-   * @param [options] {object} - optional config
+   * @param [options] {object} - optional configuration
    * @param [options.width] {number} - the max column width in characters (defaults to 30).
-   * @param [options.ignore] {RegExp | RegExp[]} - one or more patterns to be ignored when sizing the newly wrapped lines. For example `ignore: /\u001b.*?m/g` will ignore unprintable ansi escape sequences.
    * @param [options.break] {boolean} - if true, words exceeding the specified `width` will be forcefully broken
-   * @param [options.eol] {string} - the desired new line character to use, defaults to [os.EOL](https://nodejs.org/api/os.html#os_os_eol).
    * @return {string}
-   * @alias module:wordwrapjs
    */
   static wrap (text, options) {
     const block = new this(text, options)
-    return block.toString()
+    return block.wrap()
   }
+
+  /**
+   * Wraps the input text, returning an array of strings (lines).
+   * @param {string} - input text
+   * @param {object} - Accepts same options as constructor.
+   */
   static lines (text, options) {
     const block = new this(text, options)
     return block.lines()
   }
+
   /**
-   * Returns true if the input text is wrappable
+   * Returns true if the input text would be wrapped if passed into `.wrap()`.
    * @param {string} - input text
    * @return {boolean}
    */
@@ -98,7 +112,7 @@ class TextBlock {
   }
 
   /**
-   * Splits the input text returning an array of words
+   * Splits the input text into an array of words.
    * @param {string} - input text
    * @returns {string[]}
    */
@@ -116,7 +130,4 @@ function replaceIgnored (string, toReplace) {
   return string.replace(re.ansiEscapeSequence, '')
 }
 
-// const lines = TextBlock.lines('one \n \n two three four', { width: 8 })
-// console.log(lines)
-
-module.exports = TextBlock
+module.exports = WordWrap

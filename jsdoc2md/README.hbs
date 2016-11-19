@@ -8,20 +8,19 @@
 
 Word wrapping, with a few features.
 
-- multilingual - wraps any language using whitespace for word separation.
 - force-break option
-- ignore pattern option (e.g. ansi escape sequences)
 - wraps hypenated words
+- multilingual - wraps any language that uses whitespace for word separation.
 
 ## Synopsis
 
 Wrap some sick bars in a 20 character column.
 
 ```js
-> wrap = require('wordwrapjs')
+> wordwrap = require('wordwrapjs')
 
 > bars = "I'm rapping. I'm rapping. I'm rap rap rapping. I'm rap rap rap rap rappity rapping."
-> result = wrap(bars, { width: 20 })
+> result = wordwrap.wrap(bars, { width: 20 })
 ```
 
 `result` now looks like this:
@@ -33,9 +32,9 @@ rap rap rappity
 rapping.
 ```
 
-By default, long words will not break. Unless you insist.
+By default, long words will not break. Unless you set the `break` option.
 ```js
-> url = "https://github.com/75lb/wordwrapjs"
+> url = 'https://github.com/75lb/wordwrapjs'
 
 > wrap.lines(url, { width: 18 })
 [ 'https://github.com/75lb/wordwrapjs' ]

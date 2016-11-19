@@ -12,18 +12,19 @@ var re = {
   ansiEscapeSequence: /\u001b.*?m/g
 };
 
-var TextBlock = function () {
-  function TextBlock(text, options) {
-    _classCallCheck(this, TextBlock);
+var WordWrap = function () {
+  function WordWrap(text, options) {
+    _classCallCheck(this, WordWrap);
 
     options = options || {};
     if (!t.isDefined(text)) text = '';
+
     this._lines = String(text).split(/\r\n|\n/g);
     this.width = options.width === undefined ? 30 : options.width;
     this.break = options.break;
   }
 
-  _createClass(TextBlock, [{
+  _createClass(WordWrap, [{
     key: 'lines',
     value: function lines() {
       var _this = this;
@@ -68,15 +69,20 @@ var TextBlock = function () {
       });
     }
   }, {
+    key: 'wrap',
+    value: function wrap() {
+      return this.lines().join(os.EOL);
+    }
+  }, {
     key: 'toString',
     value: function toString() {
-      return this.lines().join(os.EOL);
+      return this.wrap();
     }
   }], [{
     key: 'wrap',
     value: function wrap(text, options) {
       var block = new this(text, options);
-      return block.toString();
+      return block.wrap();
     }
   }, {
     key: 'lines',
@@ -100,7 +106,7 @@ var TextBlock = function () {
     }
   }]);
 
-  return TextBlock;
+  return WordWrap;
 }();
 
 function trimLine(line) {
@@ -111,4 +117,4 @@ function replaceIgnored(string, toReplace) {
   return string.replace(re.ansiEscapeSequence, '');
 }
 
-module.exports = TextBlock;
+module.exports = WordWrap;
