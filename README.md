@@ -14,7 +14,7 @@ Word wrapping, with a few features.
 
 ## Synopsis
 
-Wrap some sick bars in a 20 character column.
+Wrap some text in a 20 character column.
 
 ```js
 > wordwrap = require('wordwrapjs')
@@ -55,7 +55,7 @@ By default, long words will not break. Unless you set the `break` option.
         * [.wrap(text, [options])](#module_wordwrapjs--WordWrap.wrap) ⇒ <code>string</code>
         * [.lines(text, options)](#module_wordwrapjs--WordWrap.lines)
         * [.isWrappable(text)](#module_wordwrapjs--WordWrap.isWrappable) ⇒ <code>boolean</code>
-        * [.getWords(text)](#module_wordwrapjs--WordWrap.getWords) ⇒ <code>Array.&lt;string&gt;</code>
+        * [.getChunks(text)](#module_wordwrapjs--WordWrap.getChunks) ⇒ <code>Array.&lt;string&gt;</code>
 
 <a name="exp_module_wordwrapjs--WordWrap"></a>
 
@@ -72,6 +72,7 @@ By default, long words will not break. Unless you set the `break` option.
 | [options] | <code>object</code> | optional configuration |
 | [options.width] | <code>number</code> | the max column width in characters (defaults to 30). |
 | [options.break] | <code>boolean</code> | if true, words exceeding the specified `width` will be forcefully broken |
+| [options.noTrim] | <code>boolean</code> | By default, each line output is trimmed. If `noTrim` is set, no line-trimming occurs - all whitespace from the input text is left in. |
 
 <a name="module_wordwrapjs--WordWrap.lines"></a>
 
@@ -96,10 +97,10 @@ Returns true if the input text would be wrapped if passed into `.wrap()`.
 | --- | --- | --- |
 | text | <code>string</code> | input text |
 
-<a name="module_wordwrapjs--WordWrap.getWords"></a>
+<a name="module_wordwrapjs--WordWrap.getChunks"></a>
 
-#### wordwrap.getWords(text) ⇒ <code>Array.&lt;string&gt;</code>
-Splits the input text into an array of words.
+#### wordwrap.getChunks(text) ⇒ <code>Array.&lt;string&gt;</code>
+Splits the input text into an array of words and whitespace.
 
 **Kind**: static method of <code>[WordWrap](#exp_module_wordwrapjs--WordWrap)</code>  
 

@@ -22,39 +22,35 @@ class WordWrap {
     if (!t.isDefined(text)) text = ''
 
     this._lines = String(text).split(/\r\n|\n/g)
-    this.width = options.width === undefined ? 30 : options.width
-    this.break = options.break
+    this.options = options
+    this.options.width = options.width === undefined ? 30 : options.width
   }
 
   lines () {
     const flatten = require('reduce-flatten')
-    return this._lines.map(trimLine)
+
+    /* trim each line of the supplied text */
+    return this._lines.map(trimLine.bind(this))
+
+      /* split each line into an array of chunks, else mark it empty */
       .map(line => line.match(re.chunk) || [ '~~empty~~' ])
+
+      /* optionally, break each word on the line into pieces */
       .map(lineWords => {
-        if (this.break) {
-          return lineWords.map(word => {
-            if (replaceIgnored(word, re.ansiEscapeSequence).length > this.width) {
-              const letters = word.split('')
-              let section
-              const sections = []
-              while ((section = letters.splice(0, this.width)).length) {
-                sections.push(section.join(''))
-              }
-              return sections
-            } else {
-              return word
-            }
-          })
+        if (this.options.break) {
+          return lineWords.map(breakWord.bind(this))
         } else {
           return lineWords
         }
       })
       .map(lineWords => lineWords.reduce(flatten, []))
+
+      /* transforming the line of words to one or more new lines wrapped to size */
       .map(lineWords => {
         return lineWords
           .reduce((lines, word) => {
             let currentLine = lines[lines.length - 1]
-            if (replaceIgnored(word, re.ansiEscapeSequence).length + currentLine.length > this.width) {
+            if (replaceAnsi(word).length + replaceAnsi(currentLine).length > this.options.width) {
               lines.push(word)
             } else {
               lines[lines.length - 1] += word
@@ -63,8 +59,14 @@ class WordWrap {
           }, [ '' ])
       })
       .reduce(flatten, [])
-      .map(trimLine)
-      .filter(line => line)
+
+      /* trim the wrapped lines */
+      .map(trimLine.bind(this))
+
+      /* filter out empty lines */
+      .filter(line => line.trim())
+
+      /* restore the user's original empty lines */
       .map(line => line.replace('~~empty~~', ''))
   }
 
@@ -81,6 +83,7 @@ class WordWrap {
    * @param [options] {object} - optional configuration
    * @param [options.width] {number} - the max column width in characters (defaults to 30).
    * @param [options.break] {boolean} - if true, words exceeding the specified `width` will be forcefully broken
+   * @param [options.noTrim] {boolean} - By default, each line output is trimmed. If `noTrim` is set, no line-trimming occurs - all whitespace from the input text is left in.
    * @return {string}
    */
   static wrap (text, options) {
@@ -112,22 +115,37 @@ class WordWrap {
   }
 
   /**
-   * Splits the input text into an array of words.
+   * Splits the input text into an array of words and whitespace.
    * @param {string} - input text
    * @returns {string[]}
    */
-  static getWords (text) {
+  static getChunks (text) {
     return text.match(re.chunk) || []
   }
 
 }
 
 function trimLine (line) {
-  return line.trim()
+  return this.options.noTrim ? line : line.trim()
 }
 
-function replaceIgnored (string, toReplace) {
+function replaceAnsi (string) {
   return string.replace(re.ansiEscapeSequence, '')
+}
+
+/* break a word into several pieces */
+function breakWord (word) {
+  if (replaceAnsi(word).length > this.options.width) {
+    const letters = word.split('')
+    let piece
+    const pieces = []
+    while ((piece = letters.splice(0, this.options.width)).length) {
+      pieces.push(piece.join(''))
+    }
+    return pieces
+  } else {
+    return word
+  }
 }
 
 module.exports = WordWrap

@@ -1,6 +1,6 @@
 'use strict'
 var TestRunner = require('test-runner')
-var TextBlock = require('../../')
+var wordwrap = require('../../')
 var a = require('core-assert')
 
 var runner = new TestRunner()
@@ -8,14 +8,14 @@ var bars = "I'm rapping. I'm rapping. I'm rap rap rapping. I'm rap rap rap rap r
 
 runner.test('simple', function () {
   a.strictEqual(
-    TextBlock.wrap(bars),
+    wordwrap.wrap(bars),
     "I'm rapping. I'm rapping. I'm\nrap rap rapping. I'm rap rap\nrap rap rappity rapping."
   )
 })
 
 runner.test('width', function () {
   a.strictEqual(
-    TextBlock.wrap(bars, { width: 3 }),
+    wordwrap.wrap(bars, { width: 3 }),
     "I'm\nrapping.\nI'm\nrapping.\nI'm\nrap\nrap\nrapping.\nI'm\nrap\nrap\nrap\nrap\nrappity\nrapping."
   )
 })
@@ -27,18 +27,18 @@ runner.skip('ignore', function () {
   )
 })
 
-runner.test('TextBlock.lines', function () {
+runner.test('wordwrap.lines', function () {
   a.deepStrictEqual(
-    TextBlock.lines(bars),
+    wordwrap.lines(bars),
     [ "I'm rapping. I'm rapping. I'm",
       "rap rap rapping. I'm rap rap",
       'rap rap rappity rapping.' ]
   )
 })
 
-runner.test('TextBlock.lines, width', function () {
+runner.test('wordwrap.lines, width', function () {
   a.deepStrictEqual(
-    TextBlock.lines(bars, { width: 3 }),
+    wordwrap.lines(bars, { width: 3 }),
     [ "I'm",
       'rapping.',
       "I'm",
@@ -57,28 +57,28 @@ runner.test('TextBlock.lines, width', function () {
   )
 })
 
-runner.test('TextBlock.lines, width smaller than content width', function () {
+runner.test('wordwrap.lines, width smaller than content width', function () {
   a.deepStrictEqual(
-    TextBlock.lines('4444', { width: 3 }),
+    wordwrap.lines('4444', { width: 3 }),
     [ '4444' ]
   )
   a.deepStrictEqual(
-    TextBlock.lines('onetwothreefour fivesixseveneight', { width: 7 }),
+    wordwrap.lines('onetwothreefour fivesixseveneight', { width: 7 }),
     [ 'onetwothreefour', 'fivesixseveneight' ]
   )
 })
 
-runner.test('TextBlock.lines, break', function () {
+runner.test('wordwrap.lines, break', function () {
   a.deepStrictEqual(
-    TextBlock.lines('onetwothreefour', { width: 7, break: true }),
+    wordwrap.lines('onetwothreefour', { width: 7, break: true }),
     [ 'onetwot', 'hreefou', 'r' ]
   )
   a.deepStrictEqual(
-    TextBlock.lines('\u001b[4m--------\u001b[0m', { width: 10, break: true, ignore: /\u001b.*?m/g }),
+    wordwrap.lines('\u001b[4m--------\u001b[0m', { width: 10, break: true, ignore: /\u001b.*?m/g }),
     [ '\u001b[4m--------\u001b[0m' ]
   )
   a.deepStrictEqual(
-    TextBlock.lines(
+    wordwrap.lines(
       'onetwothreefour fivesixseveneight',
       { width: 7, break: true }
     ),
@@ -86,74 +86,94 @@ runner.test('TextBlock.lines, break', function () {
   )
 })
 
-runner.test('TextBlock.lines(text): respect existing linebreaks', function () {
+runner.test('wordwrap.lines(text): respect existing linebreaks', function () {
   a.deepStrictEqual(
-    TextBlock.lines('one\ntwo three four', { width: 8 }),
+    wordwrap.lines('one\ntwo three four', { width: 8 }),
     [ 'one', 'two', 'three', 'four' ]
   )
 
   a.deepStrictEqual(
-    TextBlock.lines('one \n \n two three four', { width: 8 }),
+    wordwrap.lines('one \n \n two three four', { width: 8 }),
     [ 'one', '', 'two', 'three', 'four' ]
   )
 
   a.deepStrictEqual(
-    TextBlock.lines('one\r\ntwo three four', { width: 8 }),
+    wordwrap.lines('one\r\ntwo three four', { width: 8 }),
     [ 'one', 'two', 'three', 'four' ]
   )
 })
 
-runner.test('TextBlock.lines(text): multilingual', function () {
+runner.test('wordwrap.lines(text): multilingual', function () {
   a.deepStrictEqual(
-    TextBlock.lines('Può parlare più lentamente?', { width: 10 }),
+    wordwrap.lines('Può parlare più lentamente?', { width: 10 }),
     [ 'Può', 'parlare', 'più', 'lentamente?' ]
   )
 
   a.deepStrictEqual(
-    TextBlock.lines('один два три', { width: 4 }),
+    wordwrap.lines('один два три', { width: 4 }),
     [ 'один', 'два', 'три' ]
   )
 })
 
 runner.test('wrap hyphenated words', function () {
   a.deepStrictEqual(
-    TextBlock.lines('ones-and-twos', { width: 5 }),
+    wordwrap.lines('ones-and-twos', { width: 5 }),
     [ 'ones-', 'and-', 'twos' ]
   )
 
   a.deepStrictEqual(
-    TextBlock.lines('ones-and-twos', { width: 10 }),
+    wordwrap.lines('ones-and-twos', { width: 10 }),
     [ 'ones-and-', 'twos' ]
   )
 
   a.deepStrictEqual(
-    TextBlock.lines('--------', { width: 5 }),
+    wordwrap.lines('--------', { width: 5 }),
     [ '--------' ]
   )
 
   a.deepStrictEqual(
-    TextBlock.lines('--one --fifteen', { width: 5 }),
+    wordwrap.lines('--one --fifteen', { width: 5 }),
     [ '--one', '--fifteen' ]
   )
 
   a.deepStrictEqual(
-    TextBlock.lines('one-two', { width: 10 }),
+    wordwrap.lines('one-two', { width: 10 }),
     [ 'one-two' ]
   )
 
   a.deepStrictEqual(
-    TextBlock.lines('ansi-escape-sequences', { width: 22 }),
+    wordwrap.lines('ansi-escape-sequences', { width: 22 }),
     [ 'ansi-escape-sequences' ]
   )
 
   a.deepStrictEqual(
-    TextBlock.lines('one - two'),
+    wordwrap.lines('one - two'),
     [ 'one - two' ]
   )
 })
 
 runner.test('isWrappable(input)', function () {
-  a.strictEqual(TextBlock.isWrappable('one two'), true)
-  a.strictEqual(TextBlock.isWrappable('one-two'), true)
-  a.strictEqual(TextBlock.isWrappable('one\ntwo'), true)
+  a.strictEqual(wordwrap.isWrappable('one two'), true)
+  a.strictEqual(wordwrap.isWrappable('one-two'), true)
+  a.strictEqual(wordwrap.isWrappable('one\ntwo'), true)
+})
+
+runner.test('getChunks', function () {
+  a.deepStrictEqual(wordwrap.getChunks('one two three'), [ 'one', ' ', 'two', ' ', 'three' ])
+})
+
+runner.test('noTrim', function () {
+  a.deepStrictEqual(wordwrap.lines('word\n - word\n - word'), [
+    'word', '- word', '- word'
+  ])
+  a.deepStrictEqual(wordwrap.lines('word\n - word\n - word', { noTrim: true }), [
+    'word', ' - word', ' - word'
+  ])
+})
+
+runner.test('wrapping text containing ansi escape sequences', function () {
+  a.deepStrictEqual(
+    wordwrap.wrap('Generates something \u001b[3mvery\u001b[0m important.', { width: 35 }),
+    'Generates something \u001b[3mvery\u001b[0m important.'
+  )
 })
