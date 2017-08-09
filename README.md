@@ -63,8 +63,8 @@ By default, long words will not break. Unless you set the `break` option.
 **Kind**: Exported class  
 <a name="module_wordwrapjs--WordWrap.wrap"></a>
 
-#### wordwrap.wrap(text, [options]) ⇒ <code>string</code>
-**Kind**: static method of <code>[WordWrap](#exp_module_wordwrapjs--WordWrap)</code>  
+#### WordWrap.wrap(text, [options]) ⇒ <code>string</code>
+**Kind**: static method of [<code>WordWrap</code>](#exp_module_wordwrapjs--WordWrap)  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -76,10 +76,10 @@ By default, long words will not break. Unless you set the `break` option.
 
 <a name="module_wordwrapjs--WordWrap.lines"></a>
 
-#### wordwrap.lines(text, options)
+#### WordWrap.lines(text, options)
 Wraps the input text, returning an array of strings (lines).
 
-**Kind**: static method of <code>[WordWrap](#exp_module_wordwrapjs--WordWrap)</code>  
+**Kind**: static method of [<code>WordWrap</code>](#exp_module_wordwrapjs--WordWrap)  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -88,10 +88,10 @@ Wraps the input text, returning an array of strings (lines).
 
 <a name="module_wordwrapjs--WordWrap.isWrappable"></a>
 
-#### wordwrap.isWrappable(text) ⇒ <code>boolean</code>
+#### WordWrap.isWrappable(text) ⇒ <code>boolean</code>
 Returns true if the input text would be wrapped if passed into `.wrap()`.
 
-**Kind**: static method of <code>[WordWrap](#exp_module_wordwrapjs--WordWrap)</code>  
+**Kind**: static method of [<code>WordWrap</code>](#exp_module_wordwrapjs--WordWrap)  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -99,10 +99,10 @@ Returns true if the input text would be wrapped if passed into `.wrap()`.
 
 <a name="module_wordwrapjs--WordWrap.getChunks"></a>
 
-#### wordwrap.getChunks(text) ⇒ <code>Array.&lt;string&gt;</code>
+#### WordWrap.getChunks(text) ⇒ <code>Array.&lt;string&gt;</code>
 Splits the input text into an array of words and whitespace.
 
-**Kind**: static method of <code>[WordWrap](#exp_module_wordwrapjs--WordWrap)</code>  
+**Kind**: static method of [<code>WordWrap</code>](#exp_module_wordwrapjs--WordWrap)  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -111,4 +111,4 @@ Splits the input text into an array of words and whitespace.
 
 * * *
 
-&copy; 2015-16 Lloyd Brookes \<75pound@gmail.com\>. Documented by [jsdoc-to-markdown](https://github.com/jsdoc2md/jsdoc-to-markdown).
+&copy; 2015-17 Lloyd Brookes \<75pound@gmail.com\>. Documented by [jsdoc-to-markdown](https://github.com/jsdoc2md/jsdoc-to-markdown).

@@ -5,32 +5,27 @@
   "description": "Word-wrapping for javascript.",
   "repository": "https://github.com/75lb/wordwrapjs.git",
   "license": "MIT",
-  "main": "index.js",
   "keywords": [
     "word",
     "line",
     "wrap",
     "text",
-    "columns"
+    "columns",
+    "wordwrap"
   ],
   "engines": {
-    "node": ">=0.12.0"
+    "node": ">=4.0.0"
   },
   "scripts": {
     "test": "node test.js",
-    "docs": "jsdoc2md -t jsdoc2md/README.hbs src/lib/*.js > README.md; echo",
-    "es5": "rm -rf es5 && babel --presets babel-preset-es2015 --no-comments src --out-dir es5"
+    "docs": "jsdoc2md -t jsdoc2md/README.hbs index.js > README.md; echo"
   },
   "devDependencies": {
-    "babel-preset-es2015": "^6.18.0",
-    "core-assert": "^0.2.1",
-    "jsdoc-to-markdown": "^2.0.1",
-    "test-runner": "~0.2.5"
+    "jsdoc-to-markdown": "^3.0.0",
+    "test-runner": "~0.4.0"
   },
   "dependencies": {
-    "array-back": "^1.0.3",
-    "feature-detect-es6": "^1.3.1",
     "reduce-flatten": "^1.0.1",
-    "typical": "^2.6.0"
+    "typical": "^2.6.1"
   }
 }
