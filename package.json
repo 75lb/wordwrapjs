@@ -1,7 +1,7 @@
 {
   "name": "wordwrapjs",
   "author": "Lloyd Brookes <75pound@gmail.com>",
-  "version": "2.0.0",
+  "version": "3.0.0",
   "description": "Word-wrapping for javascript.",
   "repository": "https://github.com/75lb/wordwrapjs.git",
   "license": "MIT",
