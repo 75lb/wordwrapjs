@@ -1,33 +1,32 @@
-'use strict'
-const TestRunner = require('test-runner')
+const Tom = require('test-runner').Tom
 const wordwrap = require('./')
 const a = require('assert')
 
-const runner = new TestRunner()
+const tom = module.exports = new Tom('wordwrap')
 const bars = "I'm rapping. I'm rapping. I'm rap rap rapping. I'm rap rap rap rap rappity rapping."
 
-runner.test('simple', function () {
+tom.test('simple', function () {
   a.strictEqual(
     wordwrap.wrap(bars),
     "I'm rapping. I'm rapping. I'm\nrap rap rapping. I'm rap rap\nrap rap rappity rapping."
   )
 })
 
-runner.test('width', function () {
+tom.test('width', function () {
   a.strictEqual(
     wordwrap.wrap(bars, { width: 3 }),
     "I'm\nrapping.\nI'm\nrapping.\nI'm\nrap\nrap\nrapping.\nI'm\nrap\nrap\nrap\nrap\nrappity\nrapping."
   )
 })
 
-runner.skip('ignore', function () {
+tom.skip('ignore', function () {
   a.strictEqual(
     wrap(bars, { ignore: "I'm" }),
     "I'm rapping. I'm rapping. I'm rap rap\nrapping. I'm rap rap rap rap\nrappity rapping."
   )
 })
 
-runner.test('wordwrap.lines', function () {
+tom.test('wordwrap.lines', function () {
   a.deepStrictEqual(
     wordwrap.lines(bars),
     [ "I'm rapping. I'm rapping. I'm",
@@ -36,7 +35,7 @@ runner.test('wordwrap.lines', function () {
   )
 })
 
-runner.test('wordwrap.lines, width', function () {
+tom.test('wordwrap.lines, width', function () {
   a.deepStrictEqual(
     wordwrap.lines(bars, { width: 3 }),
     [ "I'm",
@@ -57,7 +56,7 @@ runner.test('wordwrap.lines, width', function () {
   )
 })
 
-runner.test('wordwrap.lines, width smaller than content width', function () {
+tom.test('wordwrap.lines, width smaller than content width', function () {
   a.deepStrictEqual(
     wordwrap.lines('4444', { width: 3 }),
     [ '4444' ]
@@ -68,7 +67,7 @@ runner.test('wordwrap.lines, width smaller than content width', function () {
   )
 })
 
-runner.test('wordwrap.lines, break', function () {
+tom.test('wordwrap.lines, break', function () {
   a.deepStrictEqual(
     wordwrap.lines('onetwothreefour', { width: 7, break: true }),
     [ 'onetwot', 'hreefou', 'r' ]
@@ -86,7 +85,7 @@ runner.test('wordwrap.lines, break', function () {
   )
 })
 
-runner.test('wordwrap.lines(text): respect existing linebreaks', function () {
+tom.test('wordwrap.lines(text): respect existing linebreaks', function () {
   a.deepStrictEqual(
     wordwrap.lines('one\ntwo three four', { width: 8 }),
     [ 'one', 'two', 'three', 'four' ]
@@ -103,7 +102,7 @@ runner.test('wordwrap.lines(text): respect existing linebreaks', function () {
   )
 })
 
-runner.test('wordwrap.lines(text): multilingual', function () {
+tom.test('wordwrap.lines(text): multilingual', function () {
   a.deepStrictEqual(
     wordwrap.lines('Può parlare più lentamente?', { width: 10 }),
     [ 'Può', 'parlare', 'più', 'lentamente?' ]
@@ -115,7 +114,7 @@ runner.test('wordwrap.lines(text): multilingual', function () {
   )
 })
 
-runner.test('wrap hyphenated words', function () {
+tom.test('wrap hyphenated words', function () {
   a.deepStrictEqual(
     wordwrap.lines('ones-and-twos', { width: 5 }),
     [ 'ones-', 'and-', 'twos' ]
@@ -152,17 +151,17 @@ runner.test('wrap hyphenated words', function () {
   )
 })
 
-runner.test('isWrappable(input)', function () {
+tom.test('isWrappable(input)', function () {
   a.strictEqual(wordwrap.isWrappable('one two'), true)
   a.strictEqual(wordwrap.isWrappable('one-two'), true)
   a.strictEqual(wordwrap.isWrappable('one\ntwo'), true)
 })
 
-runner.test('getChunks', function () {
+tom.test('getChunks', function () {
   a.deepStrictEqual(wordwrap.getChunks('one two three'), [ 'one', ' ', 'two', ' ', 'three' ])
 })
 
-runner.test('noTrim', function () {
+tom.test('noTrim', function () {
   a.deepStrictEqual(wordwrap.lines('word\n - word\n - word'), [
     'word', '- word', '- word'
   ])
@@ -171,14 +170,14 @@ runner.test('noTrim', function () {
   ])
 })
 
-runner.test('wrapping text containing ansi escape sequences', function () {
+tom.test('wrapping text containing ansi escape sequences', function () {
   a.deepStrictEqual(
     wordwrap.wrap('Generates something \u001b[3mvery\u001b[0m important.', { width: 35 }),
     'Generates something \u001b[3mvery\u001b[0m important.'
   )
 })
 
-runner.test('non-string input', function () {
+tom.test('non-string input', function () {
   a.strictEqual(wordwrap.wrap(undefined), '')
   a.strictEqual(wordwrap.wrap(function () {}), 'function () {}')
   a.strictEqual(wordwrap.wrap({}), '[object Object]')

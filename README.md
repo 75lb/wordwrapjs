@@ -1,7 +1,7 @@
 [![view on npm](http://img.shields.io/npm/v/wordwrapjs.svg)](https://www.npmjs.org/package/wordwrapjs)
 [![npm module downloads](http://img.shields.io/npm/dt/wordwrapjs.svg)](https://www.npmjs.org/package/wordwrapjs)
 [![Build Status](https://travis-ci.org/75lb/wordwrapjs.svg?branch=master)](https://travis-ci.org/75lb/wordwrapjs)
-[![Dependency Status](https://david-dm.org/75lb/wordwrapjs.svg)](https://david-dm.org/75lb/wordwrapjs)
+[![Dependency Status](https://badgen.net/david/dep/75lb/wordwrapjs)](https://david-dm.org/75lb/wordwrapjs)
 [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](https://github.com/feross/standard)
 
 # wordwrapjs
@@ -111,4 +111,4 @@ Splits the input text into an array of words and whitespace.
 
 * * *
 
-&copy; 2015-17 Lloyd Brookes \<75pound@gmail.com\>. Documented by [jsdoc-to-markdown](https://github.com/jsdoc2md/jsdoc-to-markdown).
+&copy; 2015-19 Lloyd Brookes \<75pound@gmail.com\>. Documented by [jsdoc-to-markdown](https://github.com/jsdoc2md/jsdoc-to-markdown).

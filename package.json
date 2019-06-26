@@ -14,18 +14,21 @@
     "wordwrap"
   ],
   "engines": {
-    "node": ">=4.0.0"
+    "node": ">=8.0.0"
   },
   "scripts": {
-    "test": "node test.js",
-    "docs": "jsdoc2md -t jsdoc2md/README.hbs index.js > README.md; echo"
+    "test": "test-runner test.js",
+    "docs": "jsdoc2md -t README.hbs index.js > README.md; echo"
   },
   "devDependencies": {
-    "jsdoc-to-markdown": "^3.0.0",
-    "test-runner": "~0.4.0"
+    "jsdoc-to-markdown": "^5.0.0",
+    "test-runner": "~0.6.0"
   },
   "dependencies": {
-    "reduce-flatten": "^1.0.1",
-    "typical": "^2.6.1"
-  }
+    "reduce-flatten": "^2.0.0",
+    "typical": "^5.0.0"
+  },
+  "files": [
+    "index.js"
+  ]
 }
