@@ -21,12 +21,12 @@
     "docs": "jsdoc2md -t README.hbs index.js > README.md; echo"
   },
   "devDependencies": {
-    "jsdoc-to-markdown": "^5.0.0",
-    "test-runner": "~0.6.0"
+    "jsdoc-to-markdown": "^7.0.0",
+    "test-runner": "~0.6.3"
   },
   "dependencies": {
     "reduce-flatten": "^2.0.0",
-    "typical": "^5.0.0"
+    "typical": "^5.2.0"
   },
   "files": [
     "index.js"
