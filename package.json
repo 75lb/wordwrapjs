@@ -32,6 +32,7 @@
     "typical": "^6.0.1"
   },
   "files": [
-    "index.mjs"
+    "index.mjs",
+    "dist"
   ]
 }
