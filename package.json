@@ -5,6 +5,7 @@
   "description": "Word-wrapping for javascript.",
   "repository": "https://github.com/75lb/wordwrapjs.git",
   "license": "MIT",
+  "main": "index.mjs",
   "keywords": [
     "word",
     "line",
@@ -31,6 +32,6 @@
     "typical": "^6.0.1"
   },
   "files": [
-    "index.js"
+    "index.mjs"
   ]
 }
