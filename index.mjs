@@ -1,5 +1,5 @@
-const os = require('os')
-const t = require('typical')
+import t from 'typical/index.mjs'
+import flatten from 'reduce-flatten'
 
 /**
  * @module wordwrapjs
@@ -22,11 +22,10 @@ class WordWrap {
     this._lines = String(text).split(/\r\n|\n/g)
     this.options = options
     this.options.width = options.width === undefined ? 30 : options.width
+    this.options.eol = options.eol || '\n'
   }
 
   lines () {
-    const flatten = require('reduce-flatten')
-
     /* trim each line of the supplied text */
     return this._lines.map(trimLine.bind(this))
 
@@ -69,7 +68,7 @@ class WordWrap {
   }
 
   wrap () {
-    return this.lines().join(os.EOL)
+    return this.lines().join(this.options.eol)
   }
 
   toString () {
@@ -82,6 +81,7 @@ class WordWrap {
    * @param [options.width] {number} - the max column width in characters (defaults to 30).
    * @param [options.break] {boolean} - if true, words exceeding the specified `width` will be forcefully broken
    * @param [options.noTrim] {boolean} - By default, each line output is trimmed. If `noTrim` is set, no line-trimming occurs - all whitespace from the input text is left in.
+   * @param [options.eol] {boolean} - The end of line character to use. Defaults to `\n`.
    * @return {string}
    */
   static wrap (text, options) {
@@ -145,4 +145,4 @@ function breakWord (word) {
   }
 }
 
-module.exports = WordWrap
+export default WordWrap
