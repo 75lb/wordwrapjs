@@ -102,7 +102,7 @@ Old browser (adds `window.wordwrapjs`):
 | [options.width] | <code>number</code> | the max column width in characters (defaults to 30). |
 | [options.break] | <code>boolean</code> | if true, words exceeding the specified `width` will be forcefully broken |
 | [options.noTrim] | <code>boolean</code> | By default, each line output is trimmed. If `noTrim` is set, no line-trimming occurs - all whitespace from the input text is left in. |
-| [options.eol] | <code>boolean</code> | The end of line character to use. Defaults to `\n`. |
+| [options.eol] | <code>string</code> | The end of line character to use. Defaults to `\n`. |
 
 <a name="module_wordwrapjs--WordWrap.lines"></a>
 

@@ -81,7 +81,7 @@ class WordWrap {
    * @param [options.width] {number} - the max column width in characters (defaults to 30).
    * @param [options.break] {boolean} - if true, words exceeding the specified `width` will be forcefully broken
    * @param [options.noTrim] {boolean} - By default, each line output is trimmed. If `noTrim` is set, no line-trimming occurs - all whitespace from the input text is left in.
-   * @param [options.eol] {boolean} - The end of line character to use. Defaults to `\n`.
+   * @param [options.eol] {string} - The end of line character to use. Defaults to `\n`.
    * @return {string}
    */
   static wrap (text, options) {
