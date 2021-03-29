@@ -18,12 +18,12 @@
     "node": ">=14"
   },
   "scripts": {
-    "test": "test-runner test.mjs",
+    "test": "npm run dist && test-runner test.mjs",
     "docs": "jsdoc2md -c jsdoc.conf -t README.hbs index.mjs > README.md; echo",
     "dist": "rollup -c"
   },
   "devDependencies": {
-    "jsdoc-to-markdown": "^7.0.0",
+    "jsdoc-to-markdown": "^7.0.1",
     "rollup-plugin-node-resolve": "^5.2.0",
     "test-runner": "~0.8.14"
   },

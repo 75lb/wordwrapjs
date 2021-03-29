@@ -190,5 +190,13 @@ tom.test('non-string input', function () {
   a.equal(wordwrap.wrap(Infinity), 'Infinity')
 })
 
+tom.test('different eol', function () {
+  a.equal(
+    wordwrap.wrap(bars, { eol: 'LINE' }),
+    "I'm rapping. I'm rapping. I'mLINErap rap rapping. I'm rap rapLINErap rap rappity rapping."
+  )
+})
+
+
 export default tom
 

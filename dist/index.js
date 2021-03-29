@@ -312,14 +312,14 @@
    * @typicalname wordwrap
    */
   class WordWrap {
-    constructor (text, options) {
-      options = options || {};
+    constructor (text, options = {}) {
       if (!t.isDefined(text)) text = '';
 
       this._lines = String(text).split(/\r\n|\n/g);
-      this.options = options;
-      this.options.width = options.width === undefined ? 30 : options.width;
-      this.options.eol = options.eol || '\n';
+      this.options = Object.assign({
+          eol: '\n',
+          width: 30
+      }, options);
     }
 
     lines () {
@@ -378,7 +378,7 @@
      * @param [options.width] {number} - the max column width in characters (defaults to 30).
      * @param [options.break] {boolean} - if true, words exceeding the specified `width` will be forcefully broken
      * @param [options.noTrim] {boolean} - By default, each line output is trimmed. If `noTrim` is set, no line-trimming occurs - all whitespace from the input text is left in.
-     * @param [options.eol] {boolean} - The end of line character to use. Defaults to `\n`.
+     * @param [options.eol] {string} - The end of line character to use. Defaults to `\n`.
      * @return {string}
      */
     static wrap (text, options) {
