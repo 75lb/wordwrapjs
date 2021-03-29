@@ -15,14 +15,14 @@ const re = {
  * @typicalname wordwrap
  */
 class WordWrap {
-  constructor (text, options) {
-    options = options || {}
+  constructor (text, options = {}) {
     if (!t.isDefined(text)) text = ''
 
     this._lines = String(text).split(/\r\n|\n/g)
-    this.options = options
-    this.options.width = options.width === undefined ? 30 : options.width
-    this.options.eol = options.eol || '\n'
+    this.options = Object.assign({
+        eol: '\n',
+        width: 30
+    }, options);
   }
 
   lines () {
