@@ -24,6 +24,7 @@
   },
   "devDependencies": {
     "jsdoc-to-markdown": "^7.0.1",
+    "rollup": "^2.44.0",
     "rollup-plugin-node-resolve": "^5.2.0",
     "test-runner": "~0.8.14"
   },
