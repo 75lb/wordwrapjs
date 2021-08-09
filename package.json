@@ -29,7 +29,6 @@
     "test-runner": "~0.8.14"
   },
   "dependencies": {
-    "reduce-flatten": "^3.0.0",
     "typical": "^6.0.1"
   },
   "files": [

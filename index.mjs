@@ -1,5 +1,5 @@
 import t from 'typical/index.mjs'
-import flatten from 'reduce-flatten'
+import t from 'typical'
 
 /**
  * @module wordwrapjs
@@ -40,7 +40,7 @@ class WordWrap {
           return lineWords
         }
       })
-      .map(lineWords => lineWords.reduce(flatten, []))
+      .map(lineWords => lineWords.flat())
 
       /* transforming the line of words to one or more new lines wrapped to size */
       .map(lineWords => {
@@ -55,7 +55,7 @@ class WordWrap {
             return lines
           }, [ '' ])
       })
-      .reduce(flatten, [])
+      .flat()
 
       /* trim the wrapped lines */
       .map(trimLine.bind(this))
