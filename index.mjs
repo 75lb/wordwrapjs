@@ -59,7 +59,7 @@ class WordWrap {
       .flat()
 
       /* trim the wrapped lines */
-      .map(trimLine.bind(this))
+      .map(trimLine, this)
 
       /* filter out empty lines */
       .filter(line => line.trim())
