@@ -34,13 +34,10 @@ class WordWrap {
       .map(line => line.match(re.chunk) || [ '~~empty~~' ])
 
       /* optionally, break each word on the line into pieces */
-      .map(lineWords => {
-        if (this.options.break) {
-          return lineWords.map(breakWord, this)
-        } else {
-          return lineWords
-        }
-      })
+      .map(lineWords => this.options.break
+        ? lineWords.map(breakWord, this)
+        : lineWords
+      )
       .map(lineWords => lineWords.flat())
 
       /* transforming the line of words to one or more new lines wrapped to size */
