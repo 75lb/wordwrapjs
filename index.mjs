@@ -1,5 +1,3 @@
-import t from 'typical/index.mjs'
-
 /**
  * @module wordwrapjs
  */
@@ -27,9 +25,7 @@ class WordWrap {
    * @param {string} text
    * @param {WordWrapOptions} options
    */
-  constructor (text, options = {}) {
-    if (!t.isDefined(text)) text = ''
-
+  constructor (text = '', options = {}) {
     this._lines = String(text).split(/\r\n|\n/g)
     this.options = {
       eol: '\n',
@@ -109,12 +105,9 @@ class WordWrap {
    * @param {string} text input text
    * @return {boolean}
    */
-  static isWrappable (text) {
-    if (t.isDefined(text)) {
-      text = String(text)
-      var matches = text.match(re.chunk)
-      return matches ? matches.length > 1 : false
-    }
+  static isWrappable (text = '') {
+    const matches = String(text).match(re.chunk)
+    return matches ? matches.length > 1 : false
   }
 
   /**
