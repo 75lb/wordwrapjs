@@ -5,6 +5,15 @@ import t from 'typical'
  * @module wordwrapjs
  */
 
+/**
+ * WordWrap constructor options
+ * @typedef {Object} WordWrapOptions
+ * @property {number} [width=30] the max column width in characters.
+ * @property {boolean} [break=false] if true, words exceeding the specified `width` will be forcefully broken
+ * @property {boolean} [noTrim=false] By default, each line output is trimmed. If `noTrim` is set, no line-trimming occurs - all whitespace from the input text is left in.
+ * @property {string} [eol='\n'] The end of line character to use. Defaults to `\n`.
+ */
+
 const re = {
   chunk: /[^\s-]+?-\b|\S+|\s+|\r\n?|\n/g,
   ansiEscapeSequence: /\u001b.*?m/g
@@ -15,6 +24,10 @@ const re = {
  * @typicalname wordwrap
  */
 class WordWrap {
+  /**
+   * @param {string} text
+   * @param {WordWrapOptions} options
+   */
   constructor (text, options = {}) {
     if (!t.isDefined(text)) text = ''
 
@@ -74,13 +87,8 @@ class WordWrap {
   }
 
   /**
-   * @param {string} - the input text to wrap
-   * @param [options] {object} - optional configuration
-   * @param [options.width] {number} - the max column width in characters (defaults to 30).
-   * @param [options.break] {boolean} - if true, words exceeding the specified `width` will be forcefully broken
-   * @param [options.noTrim] {boolean} - By default, each line output is trimmed. If `noTrim` is set, no line-trimming occurs - all whitespace from the input text is left in.
-   * @param [options.eol] {string} - The end of line character to use. Defaults to `\n`.
-   * @return {string}
+   * @param {string} text the input text to wrap
+   * @param {WordWrapOptions} [options]
    */
   static wrap (text, options) {
     const block = new this(text, options)
@@ -89,8 +97,8 @@ class WordWrap {
 
   /**
    * Wraps the input text, returning an array of strings (lines).
-   * @param {string} - input text
-   * @param {object} - Accepts same options as constructor.
+   * @param {string} text input text
+   * @param {WordWrapOptions} [options]
    */
   static lines (text, options) {
     const block = new this(text, options)
@@ -99,7 +107,7 @@ class WordWrap {
 
   /**
    * Returns true if the input text would be wrapped if passed into `.wrap()`.
-   * @param {string} - input text
+   * @param {string} text input text
    * @return {boolean}
    */
   static isWrappable (text) {
@@ -112,7 +120,7 @@ class WordWrap {
 
   /**
    * Splits the input text into an array of words and whitespace.
-   * @param {string} - input text
+   * @param {string} text input text
    * @returns {string[]}
    */
   static getChunks (text) {
@@ -120,15 +128,20 @@ class WordWrap {
   }
 }
 
+/** @param {string} line */
 function trimLine (line) {
   return this.options.noTrim ? line : line.trim()
 }
 
+/** @param {string} string */
 function replaceAnsi (string) {
   return string.replace(re.ansiEscapeSequence, '')
 }
 
-/* break a word into several pieces */
+/**
+ * break a word into several pieces
+ * @param {string} word
+ */
 function breakWord (word) {
   if (replaceAnsi(word).length > this.options.width) {
     const letters = word.split('')
