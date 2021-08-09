@@ -19,10 +19,11 @@ class WordWrap {
     if (!t.isDefined(text)) text = ''
 
     this._lines = String(text).split(/\r\n|\n/g)
-    this.options = Object.assign({
-        eol: '\n',
-        width: 30
-    }, options);
+    this.options = {
+      eol: '\n',
+      width: 30,
+      ...options
+    };
   }
 
   lines () {
