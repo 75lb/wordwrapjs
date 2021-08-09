@@ -31,16 +31,16 @@ tom.skip('ignore', function () {
 tom.test('wordwrap.lines', function () {
   a.deepEqual(
     wordwrap.lines(bars),
-    [ "I'm rapping. I'm rapping. I'm",
+    ["I'm rapping. I'm rapping. I'm",
       "rap rap rapping. I'm rap rap",
-      'rap rap rappity rapping.' ]
+      'rap rap rappity rapping.']
   )
 })
 
 tom.test('wordwrap.lines, width', function () {
   a.deepEqual(
     wordwrap.lines(bars, { width: 3 }),
-    [ "I'm",
+    ["I'm",
       'rapping.',
       "I'm",
       'rapping.',
@@ -54,102 +54,102 @@ tom.test('wordwrap.lines, width', function () {
       'rap',
       'rap',
       'rappity',
-      'rapping.' ]
+      'rapping.']
   )
 })
 
 tom.test('wordwrap.lines, width smaller than content width', function () {
   a.deepEqual(
     wordwrap.lines('4444', { width: 3 }),
-    [ '4444' ]
+    ['4444']
   )
   a.deepEqual(
     wordwrap.lines('onetwothreefour fivesixseveneight', { width: 7 }),
-    [ 'onetwothreefour', 'fivesixseveneight' ]
+    ['onetwothreefour', 'fivesixseveneight']
   )
 })
 
 tom.test('wordwrap.lines, break', function () {
   a.deepEqual(
     wordwrap.lines('onetwothreefour', { width: 7, break: true }),
-    [ 'onetwot', 'hreefou', 'r' ]
+    ['onetwot', 'hreefou', 'r']
   )
   a.deepEqual(
     wordwrap.lines('\u001b[4m--------\u001b[0m', { width: 10, break: true, ignore: /\u001b.*?m/g }),
-    [ '\u001b[4m--------\u001b[0m' ]
+    ['\u001b[4m--------\u001b[0m']
   )
   a.deepEqual(
     wordwrap.lines(
       'onetwothreefour fivesixseveneight',
       { width: 7, break: true }
     ),
-    [ 'onetwot', 'hreefou', 'r', 'fivesix', 'sevenei', 'ght' ]
+    ['onetwot', 'hreefou', 'r', 'fivesix', 'sevenei', 'ght']
   )
 })
 
 tom.test('wordwrap.lines(text): respect existing linebreaks', function () {
   a.deepEqual(
     wordwrap.lines('one\ntwo three four', { width: 8 }),
-    [ 'one', 'two', 'three', 'four' ]
+    ['one', 'two', 'three', 'four']
   )
 
   a.deepEqual(
     wordwrap.lines('one \n \n two three four', { width: 8 }),
-    [ 'one', '', 'two', 'three', 'four' ]
+    ['one', '', 'two', 'three', 'four']
   )
 
   a.deepEqual(
     wordwrap.lines('one\r\ntwo three four', { width: 8 }),
-    [ 'one', 'two', 'three', 'four' ]
+    ['one', 'two', 'three', 'four']
   )
 })
 
 tom.test('wordwrap.lines(text): multilingual', function () {
   a.deepEqual(
     wordwrap.lines('Può parlare più lentamente?', { width: 10 }),
-    [ 'Può', 'parlare', 'più', 'lentamente?' ]
+    ['Può', 'parlare', 'più', 'lentamente?']
   )
 
   a.deepEqual(
     wordwrap.lines('один два три', { width: 4 }),
-    [ 'один', 'два', 'три' ]
+    ['один', 'два', 'три']
   )
 })
 
 tom.test('wrap hyphenated words', function () {
   a.deepEqual(
     wordwrap.lines('ones-and-twos', { width: 5 }),
-    [ 'ones-', 'and-', 'twos' ]
+    ['ones-', 'and-', 'twos']
   )
 
   a.deepEqual(
     wordwrap.lines('ones-and-twos', { width: 10 }),
-    [ 'ones-and-', 'twos' ]
+    ['ones-and-', 'twos']
   )
 
   a.deepEqual(
     wordwrap.lines('--------', { width: 5 }),
-    [ '--------' ]
+    ['--------']
   )
 
   a.deepEqual(
     wordwrap.lines('--one --fifteen', { width: 5 }),
-    [ '--one', '--fifteen' ]
+    ['--one', '--fifteen']
   )
 
   a.deepEqual(
     wordwrap.lines('one-two', { width: 10 }),
-    [ 'one-two' ]
+    ['one-two']
   )
 
   a.deepEqual(
     wordwrap.lines('ansi-escape-sequences', { width: 22 }),
-    [ 'ansi-escape-sequences' ]
+    ['ansi-escape-sequences']
   )
 
   a.deepEqual(
     wordwrap.lines('one - two'),
-    [ 'one - two' ]
+    ['one - two']
   )
 })
 
@@ -160,7 +160,7 @@ tom.test('isWrappable(input)', function () {
 })
 
 tom.test('getChunks', function () {
-  a.deepEqual(wordwrap.getChunks('one two three'), [ 'one', ' ', 'two', ' ', 'three' ])
+  a.deepEqual(wordwrap.getChunks('one two three'), ['one', ' ', 'two', ' ', 'three'])
 })
 
 tom.test('noTrim', function () {
@@ -197,6 +197,4 @@ tom.test('different eol', function () {
   )
 })
 
-
 export default tom
-

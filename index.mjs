@@ -31,7 +31,7 @@ class WordWrap {
       eol: '\n',
       width: 30,
       ...options
-    };
+    }
   }
 
   lines () {
@@ -39,7 +39,7 @@ class WordWrap {
     return this._lines.map(trimLine, this)
 
       /* split each line into an array of chunks, else mark it empty */
-      .map(line => line.match(re.chunk) || [ '~~empty~~' ])
+      .map(line => line.match(re.chunk) || ['~~empty~~'])
 
       /* optionally, break each word on the line into pieces */
       .map(lineWords => this.options.break
@@ -52,14 +52,14 @@ class WordWrap {
       .map(lineWords => {
         return lineWords
           .reduce((lines, word) => {
-            let currentLine = lines[lines.length - 1]
+            const currentLine = lines[lines.length - 1]
             if (replaceAnsi(word).length + replaceAnsi(currentLine).length > this.options.width) {
               lines.push(word)
             } else {
               lines[lines.length - 1] += word
             }
             return lines
-          }, [ '' ])
+          }, [''])
       })
       .flat()
 
