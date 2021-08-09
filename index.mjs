@@ -1,5 +1,4 @@
 import t from 'typical/index.mjs'
-import t from 'typical'
 
 /**
  * @module wordwrapjs
