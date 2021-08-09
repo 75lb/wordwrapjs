@@ -27,7 +27,7 @@ class WordWrap {
 
   lines () {
     /* trim each line of the supplied text */
-    return this._lines.map(trimLine.bind(this))
+    return this._lines.map(trimLine, this)
 
       /* split each line into an array of chunks, else mark it empty */
       .map(line => line.match(re.chunk) || [ '~~empty~~' ])
@@ -35,7 +35,7 @@ class WordWrap {
       /* optionally, break each word on the line into pieces */
       .map(lineWords => {
         if (this.options.break) {
-          return lineWords.map(breakWord.bind(this))
+          return lineWords.map(breakWord, this)
         } else {
           return lineWords
         }
