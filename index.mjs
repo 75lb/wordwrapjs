@@ -82,7 +82,7 @@ class WordWrap {
   }
 
   /**
-   * @param {string} text the input text to wrap
+   * @param {string} text - the input text to wrap
    * @param {WordWrapOptions} [options]
    */
   static wrap (text, options) {
@@ -92,7 +92,7 @@ class WordWrap {
 
   /**
    * Wraps the input text, returning an array of strings (lines).
-   * @param {string} text input text
+   * @param {string} text - input text
    * @param {WordWrapOptions} [options]
    */
   static lines (text, options) {
@@ -102,7 +102,7 @@ class WordWrap {
 
   /**
    * Returns true if the input text would be wrapped if passed into `.wrap()`.
-   * @param {string} text input text
+   * @param {string} text - input text
    * @return {boolean}
    */
   static isWrappable (text = '') {
@@ -112,7 +112,7 @@ class WordWrap {
 
   /**
    * Splits the input text into an array of words and whitespace.
-   * @param {string} text input text
+   * @param {string} text - input text
    * @returns {string[]}
    */
   static getChunks (text) {
