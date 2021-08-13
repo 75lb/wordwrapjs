@@ -2,7 +2,7 @@
 [![npm module downloads](https://badgen.net/npm/dt/wordwrapjs)](https://www.npmjs.org/package/wordwrapjs)
 [![Gihub repo dependents](https://badgen.net/github/dependents-repo/75lb/wordwrapjs)](https://github.com/75lb/wordwrapjs/network/dependents?dependent_type=REPOSITORY)
 [![Gihub package dependents](https://badgen.net/github/dependents-pkg/75lb/wordwrapjs)](https://github.com/75lb/wordwrapjs/network/dependents?dependent_type=PACKAGE)
-[![Build Status](https://travis-ci.org/75lb/wordwrapjs.svg?branch=master)](https://travis-ci.org/75lb/wordwrapjs)
+[![Node.js CI](https://github.com/75lb/wordwrapjs/actions/workflows/node.js.yml/badge.svg)](https://github.com/75lb/wordwrapjs/actions/workflows/node.js.yml)
 [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](https://github.com/feross/standard)
 
 # wordwrapjs
@@ -61,7 +61,7 @@ const wordwrap = require('wordwrapjs')
 Within Node.js with ECMAScript Module support enabled:
 
 ```js
-import wordwrap from 'wordwrapjs/index.mjs'
+import wordwrap from 'wordwrapjs'
 ```
 
 Within an modern browser ECMAScript Module:

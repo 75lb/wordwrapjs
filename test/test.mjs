@@ -1,6 +1,6 @@
 import TestRunner from 'test-runner'
 import assert from 'assert'
-import wordwrap from './index.mjs'
+import wordwrap from 'wordwrapjs'
 
 const a = assert.strict
 const tom = new TestRunner.Tom()
@@ -23,7 +23,7 @@ tom.test('width', function () {
 
 tom.skip('ignore', function () {
   a.equal(
-    wrap(bars, { ignore: "I'm" }),
+    wordwrap.wrap(bars, { ignore: "I'm" }),
     "I'm rapping. I'm rapping. I'm rap rap\nrapping. I'm rap rap rap rap\nrappity rapping."
   )
 })

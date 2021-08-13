@@ -3,9 +3,13 @@
   "author": "Lloyd Brookes <75pound@gmail.com>",
   "version": "5.0.2",
   "description": "Word-wrapping for javascript.",
-  "repository": "https://github.com/75lb/wordwrapjs.git",
+  "repository": "https://github.com/75lb/wordwrapjs",
   "license": "MIT",
-  "main": "index.mjs",
+  "exports": {
+    "import": "./index.mjs",
+    "require": "./dist/index.js"
+  },
+
   "keywords": [
     "word",
     "line",
@@ -15,21 +19,27 @@
     "wordwrap"
   ],
   "engines": {
-    "node": ">=14"
+    "node": ">=12.17"
   },
   "scripts": {
-    "test": "npm run dist && test-runner test.mjs",
+    "test": "npm run dist && test-runner test/test.?js",
     "docs": "jsdoc2md -c jsdoc.conf -t README.hbs index.mjs > README.md; echo",
     "dist": "rollup -c"
   },
   "devDependencies": {
     "jsdoc-to-markdown": "^7.0.1",
-    "rollup": "^2.44.0",
+    "rollup": "^2.56.2",
     "rollup-plugin-node-resolve": "^5.2.0",
-    "test-runner": "~0.8.14"
+    "test-runner": "~0.9.8"
   },
   "files": [
     "index.mjs",
     "dist"
-  ]
+  ],
+  "standard": {
+    "ignore": [
+      "dist", "tmp"
+    ],
+    "envs": []
+  }
 }
