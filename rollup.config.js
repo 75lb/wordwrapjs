@@ -1,8 +1,8 @@
-const resolve = require('rollup-plugin-node-resolve')
+import resolve from 'rollup-plugin-node-resolve'
 
-module.exports = [
+export default [
   {
-    input: 'index.mjs',
+    input: 'index.js',
     output: {
       file: 'dist/index.js',
       format: 'umd',
@@ -12,7 +12,16 @@ module.exports = [
     plugins: [resolve({ preferBuiltins: true })]
   },
   {
-    input: 'index.mjs',
+    input: 'index.js',
+    output: {
+      file: 'dist/index.cjs',
+      format: 'cjs',
+      name: 'wordwrapjs'
+    },
+    plugins: [resolve({ preferBuiltins: true })]
+  },
+  {
+    input: 'index.js',
     output: {
       file: 'dist/index.mjs',
       format: 'esm'

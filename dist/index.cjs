@@ -1,3 +1,5 @@
+'use strict';
+
 /**
  * @module wordwrapjs
  */
@@ -147,4 +149,4 @@ function breakWord (word) {
   }
 }
 
-export { Wordwrap as default };
+module.exports = Wordwrap;

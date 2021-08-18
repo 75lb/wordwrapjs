@@ -5,11 +5,11 @@
   "description": "Word-wrapping for javascript.",
   "repository": "https://github.com/75lb/wordwrapjs",
   "license": "MIT",
+  "type": "module",
   "exports": {
-    "import": "./index.mjs",
-    "require": "./dist/index.js"
+    "import": "./index.js",
+    "require": "./dist/index.cjs"
   },
-
   "keywords": [
     "word",
     "line",
@@ -22,18 +22,19 @@
     "node": ">=12.17"
   },
   "scripts": {
-    "test": "npm run dist && test-runner test/test.?js",
-    "docs": "jsdoc2md -c jsdoc.conf -t README.hbs index.mjs > README.md; echo",
+    "test": "npm run dist && npm run test:ci",
+    "test:ci": "test-runner test/test.?js",
+    "docs": "jsdoc2md -t README.hbs index.js > README.md",
     "dist": "rollup -c"
   },
   "devDependencies": {
     "jsdoc-to-markdown": "^7.0.1",
     "rollup": "^2.56.2",
     "rollup-plugin-node-resolve": "^5.2.0",
-    "test-runner": "~0.9.8"
+    "test-runner": "^0.9.8"
   },
   "files": [
-    "index.mjs",
+    "index.js",
     "dist"
   ],
   "standard": {
