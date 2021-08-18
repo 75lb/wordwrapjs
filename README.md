@@ -7,22 +7,17 @@
 
 # wordwrapjs
 
-Word wrapping, with a few features.
-
-- force-break option
-- wraps hypenated words
-- multilingual - wraps any language that uses whitespace for word separation.
+Word wrapping for plain text.
 
 ## Synopsis
 
 Wrap some text in a 20 character column.
 
 ```js
-> wordwrap = require('wordwrapjs')
+import wordwrap from 'wordwrapjs'
 
-> text = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
-
-> result = wordwrap.wrap(text, { width: 20 })
+const text = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
+const result = wordwrap.wrap(text, { width: 20 })
 ```
 
 `result` now looks like this:
@@ -37,10 +32,13 @@ et dolore magna
 aliqua.
 ```
 
-By default, long words will not break. Unless you set the `break` option.
-```js
-> url = 'https://github.com/75lb/wordwrapjs'
+Force long words to wrap by setting the `break` flag.
 
+```
+Welcome to Node.js v16.6.2.
+> wrap = require('wordwrapjs')
+
+> url = 'https://github.com/75lb/wordwrapjs'
 > wrap.lines(url, { width: 18 })
 [ 'https://github.com/75lb/wordwrapjs' ]
 
@@ -80,63 +78,87 @@ Old browser (adds `window.wordwrapjs`):
 
 
 * [wordwrapjs](#module_wordwrapjs)
-    * [WordWrap](#exp_module_wordwrapjs--WordWrap) ⏏
-        * [.wrap(text, [options])](#module_wordwrapjs--WordWrap.wrap) ⇒ <code>string</code>
-        * [.lines(text, options)](#module_wordwrapjs--WordWrap.lines)
-        * [.isWrappable(text)](#module_wordwrapjs--WordWrap.isWrappable) ⇒ <code>boolean</code>
-        * [.getChunks(text)](#module_wordwrapjs--WordWrap.getChunks) ⇒ <code>Array.&lt;string&gt;</code>
+    * [Wordwrap](#exp_module_wordwrapjs--Wordwrap) ⏏
+        * [new Wordwrap(text, [options])](#new_module_wordwrapjs--Wordwrap_new)
+        * _static_
+            * [.wrap(text, [options])](#module_wordwrapjs--Wordwrap.wrap)
+            * [.lines(text, [options])](#module_wordwrapjs--Wordwrap.lines)
+            * [.isWrappable(text)](#module_wordwrapjs--Wordwrap.isWrappable) ⇒ <code>boolean</code>
+            * [.getChunks(text)](#module_wordwrapjs--Wordwrap.getChunks) ⇒ <code>Array.&lt;string&gt;</code>
+        * _inner_
+            * [~WordwrapOptions](#module_wordwrapjs--Wordwrap..WordwrapOptions) : <code>Object</code>
 
-<a name="exp_module_wordwrapjs--WordWrap"></a>
+<a name="exp_module_wordwrapjs--Wordwrap"></a>
 
-### WordWrap ⏏
+### Wordwrap ⏏
 **Kind**: Exported class  
-<a name="module_wordwrapjs--WordWrap.wrap"></a>
+<a name="new_module_wordwrapjs--Wordwrap_new"></a>
 
-#### WordWrap.wrap(text, [options]) ⇒ <code>string</code>
-**Kind**: static method of [<code>WordWrap</code>](#exp_module_wordwrapjs--WordWrap)  
+#### new Wordwrap(text, [options])
+
+| Param | Type | Description |
+| --- | --- | --- |
+| text | <code>string</code> | The input text to wrap. |
+| [options] | [<code>WordwrapOptions</code>](#module_wordwrapjs--Wordwrap..WordwrapOptions) |  |
+
+<a name="module_wordwrapjs--Wordwrap.wrap"></a>
+
+#### Wordwrap.wrap(text, [options])
+**Kind**: static method of [<code>Wordwrap</code>](#exp_module_wordwrapjs--Wordwrap)  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | text | <code>string</code> | the input text to wrap |
-| [options] | <code>object</code> | optional configuration |
-| [options.width] | <code>number</code> | the max column width in characters (defaults to 30). |
-| [options.break] | <code>boolean</code> | if true, words exceeding the specified `width` will be forcefully broken |
-| [options.noTrim] | <code>boolean</code> | By default, each line output is trimmed. If `noTrim` is set, no line-trimming occurs - all whitespace from the input text is left in. |
-| [options.eol] | <code>string</code> | The end of line character to use. Defaults to `\n`. |
+| [options] | [<code>WordwrapOptions</code>](#module_wordwrapjs--Wordwrap..WordwrapOptions) |  |
 
-<a name="module_wordwrapjs--WordWrap.lines"></a>
+<a name="module_wordwrapjs--Wordwrap.lines"></a>
 
-#### WordWrap.lines(text, options)
+#### Wordwrap.lines(text, [options])
 Wraps the input text, returning an array of strings (lines).
 
-**Kind**: static method of [<code>WordWrap</code>](#exp_module_wordwrapjs--WordWrap)  
+**Kind**: static method of [<code>Wordwrap</code>](#exp_module_wordwrapjs--Wordwrap)  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | text | <code>string</code> | input text |
-| options | <code>object</code> | Accepts same options as constructor. |
+| [options] | [<code>WordwrapOptions</code>](#module_wordwrapjs--Wordwrap..WordwrapOptions) |  |
 
-<a name="module_wordwrapjs--WordWrap.isWrappable"></a>
+<a name="module_wordwrapjs--Wordwrap.isWrappable"></a>
 
-#### WordWrap.isWrappable(text) ⇒ <code>boolean</code>
+#### Wordwrap.isWrappable(text) ⇒ <code>boolean</code>
 Returns true if the input text would be wrapped if passed into `.wrap()`.
 
-**Kind**: static method of [<code>WordWrap</code>](#exp_module_wordwrapjs--WordWrap)  
+**Kind**: static method of [<code>Wordwrap</code>](#exp_module_wordwrapjs--Wordwrap)  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | text | <code>string</code> | input text |
 
-<a name="module_wordwrapjs--WordWrap.getChunks"></a>
+<a name="module_wordwrapjs--Wordwrap.getChunks"></a>
 
-#### WordWrap.getChunks(text) ⇒ <code>Array.&lt;string&gt;</code>
+#### Wordwrap.getChunks(text) ⇒ <code>Array.&lt;string&gt;</code>
 Splits the input text into an array of words and whitespace.
 
-**Kind**: static method of [<code>WordWrap</code>](#exp_module_wordwrapjs--WordWrap)  
+**Kind**: static method of [<code>Wordwrap</code>](#exp_module_wordwrapjs--Wordwrap)  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | text | <code>string</code> | input text |
+
+<a name="module_wordwrapjs--Wordwrap..WordwrapOptions"></a>
+
+#### Wordwrap~WordwrapOptions : <code>Object</code>
+Wordwrap options.
+
+**Kind**: inner typedef of [<code>Wordwrap</code>](#exp_module_wordwrapjs--Wordwrap)  
+**Properties**
+
+| Name | Type | Default | Description |
+| --- | --- | --- | --- |
+| [width] | <code>number</code> | <code>30</code> | The max column width in characters. |
+| [break] | <code>boolean</code> | <code>false</code> | If true, words exceeding the specified `width` will be forcefully broken |
+| [noTrim] | <code>boolean</code> | <code>false</code> | By default, each line output is trimmed. If `noTrim` is set, no line-trimming occurs - all whitespace from the input text is left in. |
+| [eol] | <code>string</code> | <code>&quot;&#x27;\\n&#x27;&quot;</code> | The end of line character to use. Defaults to `\n`. |
 
 
 * * *

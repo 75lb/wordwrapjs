@@ -7,22 +7,17 @@
 
 # wordwrapjs
 
-Word wrapping, with a few features.
-
-- force-break option
-- wraps hypenated words
-- multilingual - wraps any language that uses whitespace for word separation.
+Word wrapping for plain text.
 
 ## Synopsis
 
 Wrap some text in a 20 character column.
 
 ```js
-> wordwrap = require('wordwrapjs')
+import wordwrap from 'wordwrapjs'
 
-> text = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
-
-> result = wordwrap.wrap(text, { width: 20 })
+const text = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
+const result = wordwrap.wrap(text, { width: 20 })
 ```
 
 `result` now looks like this:
@@ -37,10 +32,13 @@ et dolore magna
 aliqua.
 ```
 
-By default, long words will not break. Unless you set the `break` option.
-```js
-> url = 'https://github.com/75lb/wordwrapjs'
+Force long words to wrap by setting the `break` flag.
 
+```
+Welcome to Node.js v16.6.2.
+> wrap = require('wordwrapjs')
+
+> url = 'https://github.com/75lb/wordwrapjs'
 > wrap.lines(url, { width: 18 })
 [ 'https://github.com/75lb/wordwrapjs' ]
 

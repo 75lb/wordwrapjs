@@ -5,6 +5,7 @@ import wordwrap from 'wordwrapjs'
 const a = assert.strict
 const tom = new TestRunner.Tom()
 
+/* A reference to https://www.youtube.com/watch?v=FGUjkvqkmQI */
 const bars = "I'm rapping. I'm rapping. I'm rap rap rapping. I'm rap rap rap rap rappity rapping."
 
 tom.test('simple', function () {

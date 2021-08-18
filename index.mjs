@@ -3,12 +3,12 @@
  */
 
 /**
- * WordWrap constructor options
- * @typedef {Object} WordWrapOptions
- * @property {number} [width=30] the max column width in characters.
- * @property {boolean} [break=false] if true, words exceeding the specified `width` will be forcefully broken
- * @property {boolean} [noTrim=false] By default, each line output is trimmed. If `noTrim` is set, no line-trimming occurs - all whitespace from the input text is left in.
- * @property {string} [eol='\n'] The end of line character to use. Defaults to `\n`.
+ * Wordwrap options.
+ * @typedef {Object} WordwrapOptions
+ * @property {number} [width=30] - The max column width in characters.
+ * @property {boolean} [break=false] - If true, words exceeding the specified `width` will be forcefully broken
+ * @property {boolean} [noTrim=false] - By default, each line output is trimmed. If `noTrim` is set, no line-trimming occurs - all whitespace from the input text is left in.
+ * @property {string} [eol='\n'] - The end of line character to use. Defaults to `\n`.
  */
 
 const re = {
@@ -20,10 +20,10 @@ const re = {
  * @alias module:wordwrapjs
  * @typicalname wordwrap
  */
-class WordWrap {
+class Wordwrap {
   /**
-   * @param {string} text
-   * @param {WordWrapOptions} options
+   * @param {string} text - The input text to wrap.
+   * @param {module:wordwrapjs~WordwrapOptions} [options]
    */
   constructor (text = '', options = {}) {
     this._lines = String(text).split(/\r\n|\n/g)
@@ -83,7 +83,7 @@ class WordWrap {
 
   /**
    * @param {string} text - the input text to wrap
-   * @param {WordWrapOptions} [options]
+   * @param {module:wordwrapjs~WordwrapOptions} [options]
    */
   static wrap (text, options) {
     const block = new this(text, options)
@@ -93,7 +93,7 @@ class WordWrap {
   /**
    * Wraps the input text, returning an array of strings (lines).
    * @param {string} text - input text
-   * @param {WordWrapOptions} [options]
+   * @param {module:wordwrapjs~WordwrapOptions} [options]
    */
   static lines (text, options) {
     const block = new this(text, options)
@@ -120,12 +120,10 @@ class WordWrap {
   }
 }
 
-/** @param {string} line */
 function trimLine (line) {
   return this.options.noTrim ? line : line.trim()
 }
 
-/** @param {string} string */
 function replaceAnsi (string) {
   return string.replace(re.ansiEscapeSequence, '')
 }
@@ -133,6 +131,7 @@ function replaceAnsi (string) {
 /**
  * break a word into several pieces
  * @param {string} word
+ * @private
  */
 function breakWord (word) {
   if (replaceAnsi(word).length > this.options.width) {
@@ -148,4 +147,4 @@ function breakWord (word) {
   }
 }
 
-export default WordWrap
+export default Wordwrap
