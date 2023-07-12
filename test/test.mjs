@@ -88,6 +88,24 @@ tom.test('wordwrap.lines, break', function () {
   )
 })
 
+tom.test('wordwrap.lines, cut', function () {
+  a.deepEqual(
+    wordwrap.lines('onetwothreefour', { width: 7, cut: true }),
+    ['onetwot', 'hreefou', 'r']
+  )
+  a.deepEqual(
+    wordwrap.lines('\u001b[4m--------\u001b[0m', { width: 10, cut: true, ignore: /\u001b.*?m/g }),
+    ['\u001b[4m--------\u001b[0m']
+  )
+  a.deepEqual(
+    wordwrap.lines(
+      'onetwothreefour fivesixseveneight',
+      { width: 7, cut: true }
+    ),
+    ['onetwot', 'hreefou', 'r', 'fivesix', 'sevenei', 'ght']
+  )
+})
+
 tom.test('wordwrap.lines(text): respect existing linebreaks', function () {
   a.deepEqual(
     wordwrap.lines('one\ntwo three four', { width: 8 }),
@@ -173,6 +191,33 @@ tom.test('noTrim', function () {
   ])
 })
 
+tom.test('trim', function() {
+  a.deepEqual(wordwrap.lines('word\n - word\n - word'), [
+    'word', '- word', '- word'
+  ])
+  a.deepEqual(wordwrap.lines('word\n - word\n - word', { trim: false }), [
+    'word', ' - word', ' - word'
+  ])
+})
+
+tom.test('indent', function() {
+  a.deepEqual(wordwrap.lines('word\n - word\n - word'), [
+    'word', '- word', '- word'
+  ])
+  a.deepEqual(wordwrap.lines('word\n - word\n - word', { indent: 't ' }), [
+    't word', 't - word', 't - word'
+  ])
+})
+
+tom.test('escape', function() {
+  a.deepEqual(wordwrap.lines('word\n - word\n - word'), [
+    'word', '- word', '- word'
+  ])
+  a.deepEqual(wordwrap.lines('word\n - word\n - word', { escape: function(line) { return 't ' + line; } }), [
+    't word', 't - word', 't - word'
+  ])
+})
+
 tom.test('wrapping text containing ansi escape sequences', function () {
   a.deepEqual(
     wordwrap.wrap('Generates something \u001b[3mvery\u001b[0m important.', { width: 35 }),
@@ -194,6 +239,13 @@ tom.test('non-string input', function () {
 tom.test('different eol', function () {
   a.equal(
     wordwrap.wrap(bars, { eol: 'LINE' }),
+    "I'm rapping. I'm rapping. I'mLINErap rap rapping. I'm rap rapLINErap rap rappity rapping."
+  )
+})
+
+tom.test('newline', function () {
+  a.equal(
+    wordwrap.wrap(bars, { newline: 'LINE' }),
     "I'm rapping. I'm rapping. I'mLINErap rap rapping. I'm rap rapLINErap rap rappity rapping."
   )
 })

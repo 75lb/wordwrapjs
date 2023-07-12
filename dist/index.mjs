@@ -42,10 +42,11 @@ class Wordwrap {
       .map(line => line.match(re.chunk) || ['~~empty~~'])
 
       /* optionally, break each word on the line into pieces */
-      .map(lineWords => this.options.break
+      .map(lineWords => (this.options.break || this.options.cut)
         ? lineWords.map(breakWord, this)
         : lineWords
       )
+
       .map(lineWords => lineWords.flat())
 
       /* transforming the line of words to one or more new lines wrapped to size */
@@ -63,6 +64,18 @@ class Wordwrap {
       })
       .flat()
 
+      /* Adding a simple option to add an indentation of user's choice, specified by indent: 'string' */
+      .map(line => this.options.indent
+        ? this.options.indent + line
+        : line
+      )
+
+      /* Adding an escape function to be run at the end of each line, e.g. escape: function(string){ return string + ''; } */
+      .map(line => this.options.escape
+        ? this.options.escape(line)
+        : line
+      )
+
       /* trim the wrapped lines */
       .map(trimLine, this)
 
@@ -74,7 +87,10 @@ class Wordwrap {
   }
 
   wrap () {
-    return this.lines().join(this.options.eol)
+    return this.lines().join(this.options.newline
+      ? this.options.newline
+      : this.options.eol
+    )
   }
 
   toString () {
@@ -121,7 +137,7 @@ class Wordwrap {
 }
 
 function trimLine (line) {
-  return this.options.noTrim ? line : line.trim()
+  return (this.options.noTrim || (this.options.trim === false)) ? line : line.trim()
 }
 
 function replaceAnsi (string) {
