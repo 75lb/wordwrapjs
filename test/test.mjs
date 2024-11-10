@@ -1,35 +1,33 @@
-import TestRunner from 'test-runner'
-import assert from 'assert'
 import wordwrap from 'wordwrapjs'
+import { strict as a } from 'assert'
 
-const a = assert.strict
-const tom = new TestRunner.Tom()
+const [test, only, skip] = [new Map(), new Map(), new Map()]
 
 /* A reference to https://www.youtube.com/watch?v=FGUjkvqkmQI */
 const bars = "I'm rapping. I'm rapping. I'm rap rap rapping. I'm rap rap rap rap rappity rapping."
 
-tom.test('simple', function () {
+test.set('simple', function () {
   a.equal(
     wordwrap.wrap(bars),
     "I'm rapping. I'm rapping. I'm\nrap rap rapping. I'm rap rap\nrap rap rappity rapping."
   )
 })
 
-tom.test('width', function () {
+test.set('width', function () {
   a.equal(
     wordwrap.wrap(bars, { width: 3 }),
     "I'm\nrapping.\nI'm\nrapping.\nI'm\nrap\nrap\nrapping.\nI'm\nrap\nrap\nrap\nrap\nrappity\nrapping."
   )
 })
 
-tom.skip('ignore', function () {
+skip.set('ignore', function () {
   a.equal(
     wordwrap.wrap(bars, { ignore: "I'm" }),
     "I'm rapping. I'm rapping. I'm rap rap\nrapping. I'm rap rap rap rap\nrappity rapping."
   )
 })
 
-tom.test('wordwrap.lines', function () {
+test.set('wordwrap.lines', function () {
   a.deepEqual(
     wordwrap.lines(bars),
     ["I'm rapping. I'm rapping. I'm",
@@ -38,7 +36,7 @@ tom.test('wordwrap.lines', function () {
   )
 })
 
-tom.test('wordwrap.lines, width', function () {
+test.set('wordwrap.lines, width', function () {
   a.deepEqual(
     wordwrap.lines(bars, { width: 3 }),
     ["I'm",
@@ -59,7 +57,7 @@ tom.test('wordwrap.lines, width', function () {
   )
 })
 
-tom.test('wordwrap.lines, width smaller than content width', function () {
+test.set('wordwrap.lines, width smaller than content width', function () {
   a.deepEqual(
     wordwrap.lines('4444', { width: 3 }),
     ['4444']
@@ -70,7 +68,7 @@ tom.test('wordwrap.lines, width smaller than content width', function () {
   )
 })
 
-tom.test('wordwrap.lines, break', function () {
+test.set('wordwrap.lines, break', function () {
   a.deepEqual(
     wordwrap.lines('onetwothreefour', { width: 7, break: true }),
     ['onetwot', 'hreefou', 'r']
@@ -88,7 +86,7 @@ tom.test('wordwrap.lines, break', function () {
   )
 })
 
-tom.test('wordwrap.lines(text): respect existing linebreaks', function () {
+test.set('wordwrap.lines(text): respect existing linebreaks', function () {
   a.deepEqual(
     wordwrap.lines('one\ntwo three four', { width: 8 }),
     ['one', 'two', 'three', 'four']
@@ -105,7 +103,7 @@ tom.test('wordwrap.lines(text): respect existing linebreaks', function () {
   )
 })
 
-tom.test('wordwrap.lines(text): multilingual', function () {
+test.set('wordwrap.lines(text): multilingual', function () {
   a.deepEqual(
     wordwrap.lines('Può parlare più lentamente?', { width: 10 }),
     ['Può', 'parlare', 'più', 'lentamente?']
@@ -117,7 +115,7 @@ tom.test('wordwrap.lines(text): multilingual', function () {
   )
 })
 
-tom.test('wrap hyphenated words', function () {
+test.set('wrap hyphenated words', function () {
   a.deepEqual(
     wordwrap.lines('ones-and-twos', { width: 5 }),
     ['ones-', 'and-', 'twos']
@@ -154,17 +152,17 @@ tom.test('wrap hyphenated words', function () {
   )
 })
 
-tom.test('isWrappable(input)', function () {
+test.set('isWrappable(input)', function () {
   a.equal(wordwrap.isWrappable('one two'), true)
   a.equal(wordwrap.isWrappable('one-two'), true)
   a.equal(wordwrap.isWrappable('one\ntwo'), true)
 })
 
-tom.test('getChunks', function () {
+test.set('getChunks', function () {
   a.deepEqual(wordwrap.getChunks('one two three'), ['one', ' ', 'two', ' ', 'three'])
 })
 
-tom.test('noTrim', function () {
+test.set('noTrim', function () {
   a.deepEqual(wordwrap.lines('word\n - word\n - word'), [
     'word', '- word', '- word'
   ])
@@ -173,14 +171,14 @@ tom.test('noTrim', function () {
   ])
 })
 
-tom.test('wrapping text containing ansi escape sequences', function () {
+test.set('wrapping text containing ansi escape sequences', function () {
   a.deepEqual(
     wordwrap.wrap('Generates something \u001b[3mvery\u001b[0m important.', { width: 35 }),
     'Generates something \u001b[3mvery\u001b[0m important.'
   )
 })
 
-tom.test('non-string input', function () {
+test.set('non-string input', function () {
   a.equal(wordwrap.wrap(undefined), '')
   a.equal(wordwrap.wrap(function () {}), 'function () {}')
   a.equal(wordwrap.wrap({}), '[object Object]')
@@ -191,11 +189,11 @@ tom.test('non-string input', function () {
   a.equal(wordwrap.wrap(Infinity), 'Infinity')
 })
 
-tom.test('different eol', function () {
+test.set('different eol', function () {
   a.equal(
     wordwrap.wrap(bars, { eol: 'LINE' }),
     "I'm rapping. I'm rapping. I'mLINErap rap rapping. I'm rap rapLINErap rap rappity rapping."
   )
 })
 
-export default tom
+export { test, only, skip }

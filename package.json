@@ -1,6 +1,6 @@
 {
   "name": "wordwrapjs",
-  "author": "Lloyd Brookes <75pound@gmail.com>",
+  "author": "Lloyd Brookes <opensource@75lb.com>",
   "version": "5.1.0",
   "description": "Word-wrapping for javascript.",
   "repository": "https://github.com/75lb/wordwrapjs",
@@ -23,15 +23,11 @@
   },
   "scripts": {
     "test": "npm run dist && npm run test:ci",
-    "test:ci": "test-runner test/test.?js",
-    "docs": "jsdoc2md -t README.hbs index.js > README.md",
-    "dist": "rollup -c"
+    "test:ci": "75lb-nature test-runner test/test.?js",
+    "docs": "75lb-nature jsdoc2md -t README.hbs index.js > README.md",
+    "dist": "75lb-nature cjs-build index.js && 75lb-nature simple-rollup index.js"
   },
   "devDependencies": {
-    "jsdoc-to-markdown": "^7.0.1",
-    "rollup": "^2.56.2",
-    "rollup-plugin-node-resolve": "^5.2.0",
-    "test-runner": "^0.9.8"
   },
   "files": [
     "index.js",
