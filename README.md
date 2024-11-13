@@ -56,7 +56,7 @@ Node.js:
 const wordwrap = require('wordwrapjs')
 ```
 
-Within Node.js with ECMAScript Module support enabled:
+Within Node.js:
 
 ```js
 import wordwrap from 'wordwrapjs'
@@ -66,12 +66,6 @@ Within an modern browser ECMAScript Module:
 
 ```js
 import wordwrap from './node_modules/wordwrapjs/dist/index.mjs'
-```
-
-Old browser (adds `window.wordwrapjs`):
-
-```html
-<script nomodule src="./node_modules/wordwrapjs/dist/index.js"></script>
 ```
 
 ## API Reference

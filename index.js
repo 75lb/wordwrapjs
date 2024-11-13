@@ -1,3 +1,5 @@
+import stringWidth from 'string-width'
+
 /**
  * @module wordwrapjs
  */
@@ -12,7 +14,6 @@
  */
 
 const re = {
-  chunk: /[^\s-]+?-\b|\S+|\s+|\r\n?|\n/g,
   ansiEscapeSequence: /\u001b.*?m/g
 }
 
@@ -32,28 +33,37 @@ class Wordwrap {
       width: 30,
       ...options
     }
+    this.segmenter = new Intl.Segmenter(this.options.locale, { granularity: 'word' })
   }
 
   lines () {
     /* trim each line of the supplied text */
     return this._lines.map(trimLine, this)
 
-      /* split each line into an array of chunks, else mark it empty */
-      .map(line => line.match(re.chunk) || ['~~empty~~'])
+      /* split each line into an array of segments, else mark it empty */
+      .map(line => {
+        const segments = Array.from(this.segmenter.segment(line)).map(s => s.segment)
+        if (segments.length) {
+          return segments
+        } else {
+          return ['~~empty~~']
+        }
+      })
 
       /* optionally, break each word on the line into pieces */
-      .map(lineWords => this.options.break
-        ? lineWords.map(breakWord, this)
-        : lineWords
+      .map(segments => this.options.break
+        ? segments.map(breakWord, this)
+        : segments
       )
-      .map(lineWords => lineWords.flat())
+      .map(segments => segments.flat())
 
-      /* transforming the line of words to one or more new lines wrapped to size */
-      .map(lineWords => {
-        return lineWords
+      /* transforming the line of segments to one or more new lines wrapped to size */
+      .map(segments => {
+        return segments
           .reduce((lines, word) => {
             const currentLine = lines[lines.length - 1]
-            if (replaceAnsi(word).length + replaceAnsi(currentLine).length > this.options.width) {
+            if (word.length + currentLine.length > this.options.width) {
+            // if (stringWidth(word) + stringWidth(currentLine) > this.options.width) {
               lines.push(word)
             } else {
               lines[lines.length - 1] += word
@@ -106,8 +116,8 @@ class Wordwrap {
    * @return {boolean}
    */
   static isWrappable (text = '') {
-    const matches = String(text).match(re.chunk)
-    return matches ? matches.length > 1 : false
+    const segments = this.getSegments(text)
+    return segments ? segments.length > 1 : false
   }
 
   /**
@@ -115,8 +125,8 @@ class Wordwrap {
    * @param {string} text - input text
    * @returns {string[]}
    */
-  static getChunks (text) {
-    return text.match(re.chunk) || []
+  static getSegments (text) {
+    return Array.from(this.segmenter.segment(text)).map(s => s.segment)
   }
 }
 
@@ -134,12 +144,37 @@ function replaceAnsi (string) {
  * @private
  */
 function breakWord (word) {
-  if (replaceAnsi(word).length > this.options.width) {
+  if (stringWidth(word) > this.options.width) {
     const letters = word.split('')
-    let piece
+    const letter = ''
     const pieces = []
-    while ((piece = letters.splice(0, this.options.width)).length) {
-      pieces.push(piece.join(''))
+    let piece = ''; let nextPiece = ''; let nextWidth = 0
+    /* Performance sensitive loop - avoid new memory allocations (const, let) */
+    while (letters.length) {
+      nextPiece = piece + letters[0]
+      nextWidth = stringWidth(nextPiece)
+      if (nextWidth === this.options.width) {
+        pieces.push(nextPiece)
+        letters.shift()
+        nextPiece = ''
+        piece = ''
+      } else if (nextWidth < this.options.width) {
+        piece = nextPiece
+        letters.shift()
+        nextPiece = ''
+      } else if (nextWidth > this.options.width && nextPiece.length === 1) {
+        pieces.push(nextPiece)
+        letters.shift()
+        nextPiece = ''
+        piece = ''
+      } else if (nextWidth > this.options.width) {
+        pieces.push(piece)
+        nextPiece = ''
+        piece = ''
+      }
+      if (letters.length === 0) {
+        pieces.push(piece)
+      }
     }
     return pieces
   } else {
