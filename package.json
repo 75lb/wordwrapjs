@@ -20,11 +20,11 @@
     "word-wrap"
   ],
   "engines": {
-    "node": ">=12.17"
+    "node": ">=12.20"
   },
   "scripts": {
     "test": "npm run test:ci",
-    "test:ci": "75lb-nature test-runner test/test.?js",
+    "test:ci": "75lb-nature test-runner test/test.js",
     "docs": "75lb-nature jsdoc2md -t README.hbs index.js > README.md"
   },
   "files": [
