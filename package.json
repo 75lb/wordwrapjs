@@ -7,25 +7,25 @@
   "license": "MIT",
   "type": "module",
   "exports": {
-    "import": "./index.js",
-    "require": "./dist/index.cjs"
+    ".": "./index.js",
+    "./column": "./lib/column.js"
   },
   "keywords": [
     "word",
     "line",
     "wrap",
     "text",
-    "columns",
-    "wordwrap"
+    "column",
+    "wordwrap",
+    "word-wrap"
   ],
   "engines": {
     "node": ">=12.17"
   },
   "scripts": {
-    "test": "npm run dist && npm run test:ci",
+    "test": "npm run test:ci",
     "test:ci": "75lb-nature test-runner test/test.?js",
-    "docs": "75lb-nature jsdoc2md -t README.hbs index.js > README.md",
-    "dist": "75lb-nature cjs-build index.js --include-externals && 75lb-nature simple-rollup index.js"
+    "docs": "75lb-nature jsdoc2md -t README.hbs index.js > README.md"
   },
   "files": [
     "index.js",

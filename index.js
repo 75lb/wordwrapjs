@@ -1,185 +1,39 @@
-import stringWidth from 'string-width'
+import Column from 'wordwrapjs/column'
+import util from 'node:util'
+util.inspect.defaultOptions.depth = 6
+util.inspect.defaultOptions.breakLength = process.stdout.columns
+util.inspect.defaultOptions.maxArrayLength = Infinity
 
-/**
- * @module wordwrapjs
- */
+function wrap (text = '', options = {}) {
+  const locale = options.locale
+  const granularity = options.granularity || 'word' // grapheme, word, sentence
 
-/**
- * Wordwrap options.
- * @typedef {Object} WordwrapOptions
- * @property {number} [width=30] - The max column width in characters.
- * @property {boolean} [break=false] - If true, words exceeding the specified `width` will be forcefully broken
- * @property {boolean} [noTrim=false] - By default, each line output is trimmed. If `noTrim` is set, no line-trimming occurs - all whitespace from the input text is left in.
- * @property {string} [eol='\n'] - The end of line character to use. Defaults to `\n`.
- */
+  const segmenter = new Intl.Segmenter(locale, { granularity })
+  const column = new Column(options)
 
-const re = {
-  ansiEscapeSequence: /\u001b.*?m/g
+  for (const s of segmenter.segment(text)) {
+    column.add(s.segment)
+  }
+  column.end()
+  return column
 }
 
-/**
- * @alias module:wordwrapjs
- * @typicalname wordwrap
- */
-class Wordwrap {
-  /**
-   * @param {string} text - The input text to wrap.
-   * @param {module:wordwrapjs~WordwrapOptions} [options]
-   */
-  constructor (text = '', options = {}) {
-    this._lines = String(text).split(/\r\n|\n/g)
-    this.options = {
-      eol: '\n',
-      width: 30,
-      ...options
-    }
-    this.segmenter = new Intl.Segmenter(this.options.locale, { granularity: 'word' })
-  }
+export default wrap
 
-  lines () {
-    /* trim each line of the supplied text */
-    return this._lines.map(trimLine, this)
+// const english = `1. A one-yard square must be drawn in the middle of the combat place, to which the “seconds”, after the fall of one of the contestants or at the beginning of the fight, must take their pupils, placing them face to face. While both are in said square they cannot hit each other.
 
-      /* split each line into an array of segments, else mark it empty */
-      .map(line => {
-        const segments = Array.from(this.segmenter.segment(line)).map(s => s.segment)
-        if (segments.length) {
-          return segments
-        } else {
-          return ['~~empty~~']
-        }
-      })
+// 2. That in order to avoid any discussion regarding the time that a contestant remained down, it is established that if the “second” does not take his principal to the aforementioned square within thirty seconds after he was knocked down, he is considered beaten.
 
-      /* optionally, break each word on the line into pieces */
-      .map(segments => this.options.break
-        ? segments.map(breakWord, this)
-        : segments
-      )
-      .map(segments => segments.flat())
+// 3. That in the main matches no one can enter the place of the same (ring), except for the contestants and their “seconds”; The same rule applies to preliminary bouts, but in the latter, the referee is allowed, as long as he does not interfere in the bout, to enter the place of the bout, to ask for correction and to demand that the spectators take their places ; Anyone who violates these rules will be expelled from the place of the fight. When the wrestlers are ready for the fight and before the start of the fight, the place where it is held (ring) must be vacated.`
+// const chinese = `这个大漆视频迟到了四年
+// “漆”同“柒”
+// 我给这幅雕漆隐花的漆器作品取名“紫气东来”
+// 麒麟回首，万事不愁
+// 也把这份祝愿送给看到视频的每一个你，很想你们[心]
+// #李子柒紫气东来# #朝花柒拾# #焕新非遗计划# 李子柒的微博视频`
 
-      /* transforming the line of segments to one or more new lines wrapped to size */
-      .map(segments => {
-        return segments
-          .reduce((lines, word) => {
-            const currentLine = lines[lines.length - 1]
-            if (word.length + currentLine.length > this.options.width) {
-            // if (stringWidth(word) + stringWidth(currentLine) > this.options.width) {
-              lines.push(word)
-            } else {
-              lines[lines.length - 1] += word
-            }
-            return lines
-          }, [''])
-      })
-      .flat()
 
-      /* trim the wrapped lines */
-      .map(trimLine, this)
+// const column = wrap(chinese+english, { widthMode: 'visual', width: 15, pad: true })
+// console.log(column.lines)
+// console.log(column.toString())
 
-      /* filter out empty lines */
-      .filter(line => line.trim())
-
-      /* restore the user's original empty lines */
-      .map(line => line.replace('~~empty~~', ''))
-  }
-
-  wrap () {
-    return this.lines().join(this.options.eol)
-  }
-
-  toString () {
-    return this.wrap()
-  }
-
-  /**
-   * @param {string} text - the input text to wrap
-   * @param {module:wordwrapjs~WordwrapOptions} [options]
-   */
-  static wrap (text, options) {
-    const block = new this(text, options)
-    return block.wrap()
-  }
-
-  /**
-   * Wraps the input text, returning an array of strings (lines).
-   * @param {string} text - input text
-   * @param {module:wordwrapjs~WordwrapOptions} [options]
-   */
-  static lines (text, options) {
-    const block = new this(text, options)
-    return block.lines()
-  }
-
-  /**
-   * Returns true if the input text would be wrapped if passed into `.wrap()`.
-   * @param {string} text - input text
-   * @return {boolean}
-   */
-  static isWrappable (text = '') {
-    const segments = this.getSegments(text)
-    return segments ? segments.length > 1 : false
-  }
-
-  /**
-   * Splits the input text into an array of words and whitespace.
-   * @param {string} text - input text
-   * @returns {string[]}
-   */
-  static getSegments (text) {
-    return Array.from(this.segmenter.segment(text)).map(s => s.segment)
-  }
-}
-
-function trimLine (line) {
-  return this.options.noTrim ? line : line.trim()
-}
-
-function replaceAnsi (string) {
-  return string.replace(re.ansiEscapeSequence, '')
-}
-
-/**
- * break a word into several pieces
- * @param {string} word
- * @private
- */
-function breakWord (word) {
-  if (stringWidth(word) > this.options.width) {
-    const letters = word.split('')
-    const letter = ''
-    const pieces = []
-    let piece = ''; let nextPiece = ''; let nextWidth = 0
-    /* Performance sensitive loop - avoid new memory allocations (const, let) */
-    while (letters.length) {
-      nextPiece = piece + letters[0]
-      nextWidth = stringWidth(nextPiece)
-      if (nextWidth === this.options.width) {
-        pieces.push(nextPiece)
-        letters.shift()
-        nextPiece = ''
-        piece = ''
-      } else if (nextWidth < this.options.width) {
-        piece = nextPiece
-        letters.shift()
-        nextPiece = ''
-      } else if (nextWidth > this.options.width && nextPiece.length === 1) {
-        pieces.push(nextPiece)
-        letters.shift()
-        nextPiece = ''
-        piece = ''
-      } else if (nextWidth > this.options.width) {
-        pieces.push(piece)
-        nextPiece = ''
-        piece = ''
-      }
-      if (letters.length === 0) {
-        pieces.push(piece)
-      }
-    }
-    return pieces
-  } else {
-    return word
-  }
-}
-
-export default Wordwrap
