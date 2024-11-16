@@ -1,4 +1,4 @@
-import wrap from 'wordwrapjs'
+import { wrap, segment } from 'wordwrapjs'
 import { strict as a } from 'assert'
 import stringWidth from 'string-width'
 
@@ -6,11 +6,9 @@ const [test, only, skip] = [new Map(), new Map(), new Map()]
 
 test.set('.wrap(), defaults', function () {
   const fixture = 'That no contestant will be considered defeated.'
-  const result = wrap(fixture).lines
+  const result = wrap(fixture)
   const charWidth = Math.max(...result.map(l => l.length))
   const visualWidth = Math.max(...result.map(l => stringWidth(l)))
-  // console.log(charWidth, visualWidth)
-  // console.dir(result, { showHidden: true, depth: null, colors: true })
   a.deepEqual(
     result,
     ['That no contestant will be', 'considered defeated.']
@@ -19,123 +17,79 @@ test.set('.wrap(), defaults', function () {
   a.equal(visualWidth, 26)
 })
 
-skip.set('width', function () {
-  // console.dir(wordwrap.wrap(bars, { width: 3 }))
-  a.equal(
-    wordwrap.wrap(bars, { width: 3 }),
-    "I'm\n" +
-      'rapping\n' +
-      '.\n' +
-      "I'm\n" +
-      'rapping\n' +
-      '.\n' +
-      "I'm\n" +
-      'rap\n' +
-      'rap\n' +
-      'rapping\n' +
-      '.\n' +
-      "I'm\n" +
-      'rap\n' +
-      'rap\n' +
-      'rap\n' +
-      'rap\n' +
-      'rappity\n' +
-      'rapping\n' +
-      '.'
-  )
-})
-
-skip.set('.lines(), defaults', function () {
-  // console.log(wordwrap.lines(bars))
+test.set('.wrap(), width set', function () {
+  const fixture = 'That no contestant will be considered defeated.'
+  const result = wrap(fixture, { width: 10 })
+  const charWidth = Math.max(...result.map(l => l.length))
+  const visualWidth = Math.max(...result.map(l => stringWidth(l)))
   a.deepEqual(
-    wordwrap.lines(bars),
-    ["I'm rapping. I'm rapping. I'm",
-      "rap rap rapping. I'm rap rap",
-      'rap rap rappity rapping.']
-  )
-})
-
-skip.set('wordwrap.lines, width', function () {
-  // console.dir(wordwrap.lines(bars, { width: 3 }), { showHidden: true, depth: null, colors: true })
-  a.deepEqual(
-    wordwrap.lines(bars, { width: 3 }),
+    result,
     [
-      "I'm", 'rapping',
-      '.', "I'm",
-      'rapping', '.',
-      "I'm", 'rap',
-      'rap', 'rapping',
-      '.', "I'm",
-      'rap', 'rap',
-      'rap', 'rap',
-      'rappity', 'rapping',
-      '.'
+      'That no',
+      'contestant',
+      'will be',
+      'considered',
+      'defeated.'
+    ]
+  )
+  a.equal(charWidth, 10)
+  a.equal(visualWidth, 10)
+})
+
+test.set('width smaller than some words: words not split', function () {
+  const fixture = 'That no contestant will be considered defeated.'
+  const result = wrap(fixture, { width: 3 })
+  const charWidth = Math.max(...result.map(l => l.length))
+  const visualWidth = Math.max(...result.map(l => stringWidth(l)))
+  a.deepEqual(
+    result,
+    [
+      'That',       'no',
+      'contestant', 'will',
+      'be',         'considered',
+      'defeated',   '.'
+    ]
+  )
+  a.equal(charWidth, 10)
+  a.equal(visualWidth, 10)
+})
+
+test.set('grapheme: words split', function () {
+  const fixture = 'That no contestant will be considered defeated.'
+  const result = wrap(fixture, { width: 3, granularity: 'grapheme' })
+  // console.dir(result, { showHidden: true, depth: null, colors: true })
+  a.deepEqual(
+    result,
+    [
+      'Tha',        't n',
+      'o c',        'ont',
+      'est',        'ant',
+      'wi',         'll',
+      'be',         'con',
+      'sid',        'ere',
+      'd d',        'efe',
+      'ate',        'd.'
     ]
   )
 })
 
-skip.set('wordwrap.lines, width smaller than content width', function () {
+test.set('respect existing linebreaks', function () {
+  const fixture = 'one\ntwo three four'
+  const result = wrap(fixture, { width: 3 })
+  // console.dir(result, { showHidden: true, depth: null, colors: true })
   a.deepEqual(
-    wordwrap.lines('4444', { width: 3 }),
-    ['4444']
-  )
-  a.deepEqual(
-    wordwrap.lines('onetwothreefour fivesixseveneight', { width: 7 }),
-    ['onetwothreefour', 'fivesixseveneight']
-  )
-})
-
-skip.set('wordwrap.lines, break', function () {
-  a.deepEqual(
-    wordwrap.lines('onetwothreefour', { width: 7, break: true }),
-    ['onetwot', 'hreefou', 'r']
-  )
-  a.deepEqual(
-    wordwrap.lines(
-      'onetwothreefour fivesixseveneight',
-      { width: 7, break: true }
-    ),
-    ['onetwot', 'hreefou', 'r', 'fivesix', 'sevenei', 'ght']
-  )
-})
-
-skip.set('wordwrap.lines, break, ansi-escape-sequences', function () {
-  a.deepEqual(
-    wordwrap.lines('\u001b[4m--------\u001b[0m', { width: 10, break: true, ignore: /\u001b.*?m/g }),
-    ['\u001b[4m--------\u001b[0m']
-  )
-})
-
-skip.set('wordwrap.lines(text): respect existing linebreaks', function () {
-  a.deepEqual(
-    wordwrap.lines('one\ntwo three four', { width: 8 }),
+    result,
     ['one', 'two', 'three', 'four']
   )
 })
 
-skip.set('wordwrap.lines(text): respect existing linebreaks 2', function () {
+test.set('respect existing linebreaks 2', function () {
+  const fixture = 'one\n\ntwo three four'
+  const result = wrap(fixture, { width: 3 })
+  // console.dir(result, { showHidden: true, depth: null, colors: true })
   a.deepEqual(
-    wordwrap.lines('First paragraph.\n\nSecond paragraph.', { width: 18 }),
-    ['First paragraph.', '', 'Second paragraph.']
-  )
-})
-
-skip.set('wordwrap.lines(text): respect existing linebreaks 3', function () {
-  a.deepEqual(
-    wordwrap.lines('one\r\ntwo three four', { width: 8 }),
-    ['one', 'two', 'three', 'four']
-  )
-})
-
-skip.set('wordwrap.lines(text): multilingual', function () {
-  a.deepEqual(
-    wordwrap.lines('Può parlare più lentamente?', { width: 10 }),
-    ['Può', 'parlare', 'più', 'lentamente', '?']
-  )
-
-  a.deepEqual(
-    wordwrap.lines('один два три', { width: 4 }),
-    ['один', 'два', 'три']
+    result,
+    ['one', '', 'two', 'three', 'four']
   )
 })
 
@@ -258,51 +212,6 @@ skip.set('wrap hyphenated words', function () {
   )
 })
 
-skip.set('isWrappable(input)', function () {
-  a.equal(wordwrap.isWrappable('one two'), true)
-  a.equal(wordwrap.isWrappable('one-two'), true)
-  a.equal(wordwrap.isWrappable('one\ntwo'), true)
-  a.equal(wordwrap.isWrappable('onetwo'), false)
-})
-
-skip.set('getChunks', function () {
-  a.deepEqual(wordwrap.getChunks('one two three'), ['one', ' ', 'two', ' ', 'three'])
-})
-
-skip.set('noTrim', function () {
-  a.deepEqual(wordwrap.lines('word\n - word\n - word'), [
-    'word', '- word', '- word'
-  ])
-  a.deepEqual(wordwrap.lines('word\n - word\n - word', { noTrim: true }), [
-    'word', ' - word', ' - word'
-  ])
-})
-
-skip.set('wrapping text containing ansi escape sequences', function () {
-  a.deepEqual(
-    wordwrap.wrap('Generates something \u001b[3mvery\u001b[0m important.', { width: 35 }),
-    'Generates something \u001b[3mvery\u001b[0m important.'
-  )
-})
-
-skip.set('non-string input', function () {
-  a.equal(wordwrap.wrap(undefined), '')
-  a.equal(wordwrap.wrap(function () {}), 'function () {}')
-  a.equal(wordwrap.wrap({}), '[object Object]')
-  a.equal(wordwrap.wrap(null), 'null')
-  a.equal(wordwrap.wrap(true), 'true')
-  a.equal(wordwrap.wrap(0), '0')
-  a.equal(wordwrap.wrap(NaN), 'NaN')
-  a.equal(wordwrap.wrap(Infinity), 'Infinity')
-})
-
-skip.set('different eol', function () {
-  a.equal(
-    wordwrap.wrap(bars, { eol: 'LINE' }),
-    "I'm rapping. I'm rapping. I'mLINErap rap rapping. I'm rap rapLINErap rap rappity rapping."
-  )
-})
-
 skip.set('Simplified Chinese word wrapping', async function () {
   const fixture = '有理走遍天下，无理寸步难行。'
   a.deepEqual(
@@ -342,47 +251,6 @@ skip.set('English word wrapping, longer', async function () {
   console.log(wordwrap.wrap(fixture, { width: 20 }))
 })
 
-skip.set('English word wrapping: break', async function () {
-  const fixture = 'That no contestant will be considered defeated.'
-  a.deepEqual(wordwrap.lines(fixture, { width: 4, break: true }), [
-    'That', 'no', 'cont',
-    'esta', 'nt', 'will',
-    'be', 'cons', 'ider',
-    'ed', 'defe', 'ated',
-    '.'
-  ])
-})
-
-skip.set('English hyphenated', async function () {
-  const fixture = 'One-two, three, four-four-two, eight.'
-  this.data = wordwrap.lines(fixture, { width: 14 })
-})
-
-skip.set('English hyphenated, wrap', async function () {
-  const fixture = 'One-two, three, four-four-two, eight.'
-  console.log(wordwrap.wrap(fixture, { width: 14 }))
-})
-
-skip.set('URL', async function () {
-  const width = 14
-  const fixture = 'https://www.dailymail.co.uk/tvshowbiz/article-14075423/ariana-grande-nyc-weight-loss-concern-wicked-premiere.html'
-  const result = wordwrap.lines(fixture, { width })
-  console.log(result)
-  const charWidth = Math.max(...result.map(l => l.length))
-  const visualWidth = Math.max(...result.map(l => stringWidth(l)))
-  console.log(width, charWidth, visualWidth)
-})
-
-skip.set('URL, break', async function () {
-  const width = 14
-  const fixture = 'https://www.dailymail.co.uk/tvshowbiz/article-14075423/ariana-grande-nyc-weight-loss-concern-wicked-premiere.html'
-  const result = wordwrap.lines(fixture, { width, break: true })
-  console.log(result)
-  const charWidth = Math.max(...result.map(l => l.length))
-  const visualWidth = Math.max(...result.map(l => stringWidth(l)))
-  console.log(width, charWidth, visualWidth)
-})
-
 skip.set('URL', async function () {
   const width = 14
   const fixture = `这个大漆视频迟到了四年
@@ -397,7 +265,5 @@ skip.set('URL', async function () {
   const visualWidth = Math.max(...result.map(l => stringWidth(l)))
   console.log(width, charWidth, visualWidth)
 })
-
-
 
 export { test, only, skip }

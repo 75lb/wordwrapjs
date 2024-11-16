@@ -1,24 +1,22 @@
 import Column from 'wordwrapjs/column'
-import util from 'node:util'
-util.inspect.defaultOptions.depth = 6
-util.inspect.defaultOptions.breakLength = process.stdout.columns
-util.inspect.defaultOptions.maxArrayLength = Infinity
 
 function wrap (text = '', options = {}) {
-  const locale = options.locale
-  const granularity = options.granularity || 'word' // grapheme, word, sentence
-
-  const segmenter = new Intl.Segmenter(locale, { granularity })
   const column = new Column(options)
-
-  for (const s of segmenter.segment(text)) {
+  for (const s of segment(text, options)) {
     column.add(s.segment)
   }
   column.end()
-  return column
+  return column.lines
 }
 
-export default wrap
+function segment (text, options = {}) {
+  const locale = options.locale
+  const granularity = options.granularity || 'word' // grapheme, word, sentence
+  const segmenter = new Intl.Segmenter(locale, { granularity })
+  return Array.from(segmenter.segment(text))
+}
+
+export { wrap, segment }
 
 // const english = `1. A one-yard square must be drawn in the middle of the combat place, to which the “seconds”, after the fall of one of the contestants or at the beginning of the fight, must take their pupils, placing them face to face. While both are in said square they cannot hit each other.
 
@@ -32,8 +30,10 @@ export default wrap
 // 也把这份祝愿送给看到视频的每一个你，很想你们[心]
 // #李子柒紫气东来# #朝花柒拾# #焕新非遗计划# 李子柒的微博视频`
 
+// const arabic = 'لما اتفرّقت العقول كل واحد عجبه عقله، ولما اتفرّقت الأرزاق ماحدش عجبه رزقه'
+// const eng2 = 'A one-yard square must be drawn in the middle of the combat place, to which the “seconds”, after the fall of one of the contestants or at the beginning of the fight, must take their pupils, placing them face to face.'
+// const chi2 = '有理走遍天下，无理寸步难行。'
 
-// const column = wrap(chinese+english, { widthMode: 'visual', width: 15, pad: true })
+// const column = wrap(arabic + eng2 + chi2, { widthMode: 'visual', width: 15, pad: true })
 // console.log(column.lines)
 // console.log(column.toString())
-
