@@ -93,177 +93,139 @@ test.set('respect existing linebreaks 2', function () {
   )
 })
 
-skip.set('Double-width unicode characters', function () {
-  const width = 10
-  const fixture = '基于gulp和 browserify 的项 目构建 工具'
-  const result = wordwrap.lines(fixture, { width })
-  const maxLetterLength = Math.max(...result.map(l => l.length))
-  const maxLetterVisualWidth = Math.max(...result.map(l => stringWidth(l)))
-  a.deepEqual(result, ['基于gulp和', 'browserify', '的项', '目构建', '工具'])
-})
-
-skip.set('Double-width unicode characters 2', function () {
-  const width = 10
-  const fixture = '基于gulp和 one two tt 的项的项的项的项 目构建 工具'
-  const result = wordwrap.lines(fixture, { width })
-  const maxLetterLength = Math.max(...result.map(l => l.length))
-  const maxLetterVisualWidth = Math.max(...result.map(l => stringWidth(l)))
-  a.deepEqual(result, ['基于gulp和', 'one two', 'tt', '的项的项的项的项', '目构建', '工具'])
-})
-
-skip.set('Double-width unicode characters: break mode 1', function () {
-  const width = 10
-  const fixture = '基于gulp和 one two tt 的项的项的项的项 目构建 工具'
-  const result = wordwrap.lines(fixture, { width, break: true })
-  const maxLetterLength = Math.max(...result.map(l => l.length))
-  const maxLetterVisualWidth = Math.max(...result.map(l => stringWidth(l)))
-  a.deepEqual(result, ['基于gulp和', 'one two', 'tt', '的项的项的', '项的项', '目构建', '工具'])
-  a.ok(maxLetterLength <= width)
-  a.ok(maxLetterVisualWidth <= width)
-})
-
-skip.set('Double-width unicode characters: break mode 2', function () {
-  const width = 10
-  const result = wordwrap.lines('基于gulp和browserify的项目构建工具', { width, break: true })
-  const maxLetterLength = Math.max(...result.map(l => l.length))
-  const maxLetterVisualWidth = Math.max(...result.map(l => stringWidth(l)))
-  a.deepEqual(result, ['基于gulp和', 'browserify', '的项目构建', '工具'])
-  a.ok(maxLetterLength <= width)
-  a.ok(maxLetterVisualWidth <= width)
-})
-
-skip.set('Double-width unicode characters: break mode 3', function () {
-  const width = 9
-  const result = wordwrap.lines('基于gulp和browserify的项目构建工具', { width, break: true })
-  const maxLetterLength = Math.max(...result.map(l => l.length))
-  const maxLetterVisualWidth = Math.max(...result.map(l => stringWidth(l)))
-  a.deepEqual(result, ['基于gulp', '和browser', 'ify的项目', '构建工具'])
-  a.ok(maxLetterLength <= width)
-  a.ok(maxLetterVisualWidth <= width)
-})
-
-skip.set('Double-width unicode characters: break mode 3', function () {
-  const width = 2
-  const result = wordwrap.lines('基于gulp和browserify的项目构建工具', { width, break: true })
-  const maxLetterLength = Math.max(...result.map(l => l.length))
-  const maxLetterVisualWidth = Math.max(...result.map(l => stringWidth(l)))
-  a.deepEqual(result, [
-    '基', '于', 'gu', 'lp',
-    '和', 'br', 'ow', 'se',
-    'ri', 'fy', '的', '项',
-    '目', '构', '建', '工',
-    '具'
-  ])
-  a.ok(maxLetterLength <= width)
-  a.ok(maxLetterVisualWidth <= width)
-})
-
-skip.set('Width of 1 smaller than the minimum visual width (2)', function () {
-  const width = 1
-  const result = wordwrap.lines('基于gulp和browserify的项目构建工具', { width, break: true })
-  const maxLetterLength = Math.max(...result.map(l => l.length))
-  const maxLetterVisualWidth = Math.max(...result.map(l => stringWidth(l)))
-  a.deepEqual(result, [
-    '基', '于', 'g', 'u', 'l',
-    'p', '和', 'b', 'r', 'o',
-    'w', 's', 'e', 'r', 'i',
-    'f', 'y', '的', '项', '目',
-    '构', '建', '工', '具'
-  ])
-  a.ok(maxLetterLength <= width)
-  /* It's impossible to break wide-character letters down any less than 2 */
-  a.ok(maxLetterVisualWidth <= 2)
-})
-
-skip.set('wrap hyphenated words', function () {
-  a.deepEqual(
-    wordwrap.lines('ones-and-twos', { width: 5 }),
-    ['ones-', 'and-', 'twos']
-  )
-
-  a.deepEqual(
-    wordwrap.lines('ones-and-twos', { width: 10 }),
-    ['ones-and-', 'twos']
-  )
-
-  a.deepEqual(
-    wordwrap.lines('--------', { width: 5 }),
-    ['-----', '---']
-  )
-
-  a.deepEqual(
-    wordwrap.lines('--one --fifteen', { width: 5 }),
-    ['--one', '--', 'fifteen']
-  )
-
-  a.deepEqual(
-    wordwrap.lines('one-two', { width: 10 }),
-    ['one-two']
-  )
-
-  a.deepEqual(
-    wordwrap.lines('ansi-escape-sequences', { width: 22 }),
-    ['ansi-escape-sequences']
-  )
-
-  a.deepEqual(
-    wordwrap.lines('one - two'),
-    ['one - two']
-  )
-})
-
-skip.set('Simplified Chinese word wrapping', async function () {
-  const fixture = '有理走遍天下，无理寸步难行。'
-  a.deepEqual(
-    wordwrap.lines(fixture, { width: 6, locale: 'zh-CN' }),
-    ['有理', '走遍', '天下，', '无理', '寸步难', '行。']
-  )
-})
-
-skip.set('Simplified Chinese word wrapping, break', async function () {
-  const fixture = '有理走遍天下，无理寸步难行。'
-  a.deepEqual(
-    wordwrap.lines(fixture, { width: 2, locale: 'zh-CN', break: true }),
-    [
-      '有', '理', '走',
-      '遍', '天', '下',
-      '，', '无', '理',
-      '寸', '步', '难',
-      '行', '。'
-    ]
-  )
-})
-
-skip.set('English word wrapping', async function () {
-  const fixture = 'That no contestant will be considered defeated.'
-  a.deepEqual(
-    wordwrap.lines(fixture, { width: 10 }),
-    ['That no', 'contestant', 'will be', 'considered', 'defeated.']
-  )
-})
-
-skip.set('English word wrapping, longer', async function () {
-  const fixture = `1. A one-yard square must be drawn in the middle of the combat place, to which the “seconds”, after the fall of one of the contestants or at the beginning of the fight, must take their pupils, placing them face to face. While both are in said square they cannot hit each other.
-
-2. That in order to avoid any discussion regarding the time that a contestant remained down, it is established that if the “second” does not take his principal to the aforementioned square within thirty seconds after he was knocked down, he is considered beaten.
-
-3. That in the main matches no one can enter the place of the same (ring), except for the contestants and their “seconds”; The same rule applies to preliminary bouts, but in the latter, the referee is allowed, as long as he does not interfere in the bout, to enter the place of the bout, to ask for correction and to demand that the spectators take their places ; Anyone who violates these rules will be expelled from the place of the fight. When the wrestlers are ready for the fight and before the start of the fight, the place where it is held (ring) must be vacated.`
-  console.log(wordwrap.wrap(fixture, { width: 20 }))
-})
-
-skip.set('URL', async function () {
-  const width = 14
+test.set('Simplified Chinese with both full and half width chars', function () {
   const fixture = `这个大漆视频迟到了四年
 “漆”同“柒”
 我给这幅雕漆隐花的漆器作品取名“紫气东来”
 麒麟回首，万事不愁
 也把这份祝愿送给看到视频的每一个你，很想你们[心]
 #李子柒紫气东来# #朝花柒拾# #焕新非遗计划# 李子柒的微博视频`
-  const result = wordwrap.lines(fixture, { width, break: true })
-  console.log(result)
+  const result = wrap(fixture, { width: 10 })
   const charWidth = Math.max(...result.map(l => l.length))
   const visualWidth = Math.max(...result.map(l => stringWidth(l)))
-  console.log(width, charWidth, visualWidth)
+  // console.log(charWidth, visualWidth)
+  // console.log(result)
+  a.deepEqual(
+    result,
+    [
+      '这个大漆',   '视频迟到了',
+      '四年',       '“漆”同“柒”',
+      '我给这幅',   '雕漆隐花的',
+      '漆器作品取', '名“紫气东',
+      '来”',        '麒麟回首，',
+      '万事不愁',   '也把这份',
+      '祝愿送给',   '看到视频的',
+      '每一个你，', '很想你们[',
+      '心]',        '#李子柒紫',
+      '气东来# #',  '朝花柒拾#',
+      '#焕新非遗',  '计划# 李子',
+      '柒的微博',   '视频'
+    ]
+  )
+  a.equal(charWidth, 7)
+  a.equal(visualWidth, 10)
+})
+
+test.set('Simplified Chinese with both full and half width chars, widthMode: visual', function () {
+  const fixture = `这个大漆视频迟到了四年
+“漆”同“柒”
+我给这幅雕漆隐花的漆器作品取名“紫气东来”
+麒麟回首，万事不愁
+也把这份祝愿送给看到视频的每一个你，很想你们[心]
+#李子柒紫气东来# #朝花柒拾# #焕新非遗计划# 李子柒的微博视频`
+  const result = wrap(fixture, { width: 10, widthMode: 'visual' })
+  const charWidth = Math.max(...result.map(l => l.length))
+  const visualWidth = Math.max(...result.map(l => stringWidth(l)))
+  // console.log(charWidth, visualWidth)
+  // console.log(result)
+  a.deepEqual(
+    result,
+    [
+      '这个大漆',   '视频迟到了',
+      '四年',       '“漆”同“柒”',
+      '我给这幅',   '雕漆隐花的',
+      '漆器作品取', '名“紫气东',
+      '来”',        '麒麟回首，',
+      '万事不愁',   '也把这份',
+      '祝愿送给',   '看到视频的',
+      '每一个你，', '很想你们[',
+      '心]',        '#李子柒紫',
+      '气东来# #',  '朝花柒拾#',
+      '#焕新非遗',  '计划# 李子',
+      '柒的微博',   '视频'
+    ]
+  )
+  a.equal(charWidth, 7)
+  a.equal(visualWidth, 10)
+})
+
+test.set('Mixed languages, widthMode: visual', function () {
+  const arabic = 'لما اتفرّقت العقول كل واحد عجبه عقله، ولما اتفرّقت الأرزاق ماحدش عجبه رزقه'
+  const eng2 = 'A one-yard square must be drawn in the middle of the combat place, to which the “seconds”, after the fall of one of the contestants or at the beginning of the fight, must take their pupils, placing them face to face.'
+  const chi2 = '有理走遍天下，无理寸步难行。'
+
+  const result = wrap(arabic + eng2 + chi2, { width: 12, widthMode: 'visual' })
+  const charWidth = Math.max(...result.map(l => l.length))
+  const visualWidth = Math.max(...result.map(l => stringWidth(l)))
+  // console.log(charWidth, visualWidth)
+  // console.log(result)
+  a.deepEqual(
+    result,
+    [
+      'لما اتفرّقت',   'العقول كل',    'واحد عجبه',
+      'عقله، ولما',   'اتفرّقت',       'الأرزاق',
+      'ماحدش عجبه',   'رزقهA one-',   'yard square',
+      'must be',      'drawn in the', 'middle of',
+      'the combat',   'place, to',    'which the “',
+      'seconds”,',    'after the',    'fall of one',
+      'of the',       'contestants',  'or at the',
+      'beginning of', 'the fight,',   'must take',
+      'their pupils', ', placing',    'them face to',
+      'face.有理',    '走遍天下，',   '无理寸步难行',
+      '。'
+    ]
+  )
+  a.equal(charWidth, 12)
+  a.equal(visualWidth, 12)
+})
+
+test.set('Longer example', function () {
+  const fixture = `1. A one-yard square must be drawn in the middle of the combat place, to which the “seconds”, after the fall of one of the contestants or at the beginning of the fight, must take their pupils, placing them face to face. While both are in said square they cannot hit each other.
+
+2. That in order to avoid any discussion regarding the time that a contestant remained down, it is established that if the “second” does not take his principal to the aforementioned square within thirty seconds after he was knocked down, he is considered beaten.
+
+3. That in the main matches no one can enter the place of the same (ring), except for the contestants and their “seconds”; The same rule applies to preliminary bouts, but in the latter, the referee is allowed, as long as he does not interfere in the bout, to enter the place of the bout, to ask for correction and to demand that the spectators take their places ; Anyone who violates these rules will be expelled from the place of the fight. When the wrestlers are ready for the fight and before the start of the fight, the place where it is held (ring) must be vacated.`
+  const result = wrap(fixture, { width: 15 })
+  const charWidth = Math.max(...result.map(l => l.length))
+  // console.log(result)
+  a.deepEqual(
+    result,
+    [
+      '1. A one-yard',   'square must be',  'drawn in the',    'middle of the',
+      'combat place,',   'to which the “',  'seconds”, after', 'the fall of',
+      'one of the',      'contestants or',  'at the',          'beginning of',
+      'the fight, must', 'take their',      'pupils, placing', 'them face to',
+      'face. While',     'both are in',     'said square',     'they cannot hit',
+      'each other.',     '',                '2. That in',      'order to avoid',
+      'any discussion',  'regarding the',   'time that a',     'contestant',
+      'remained down,',  'it is',           'established',     'that if the “',
+      'second” does',    'not take his',    'principal to',    'the',
+      'aforementioned',  'square within',   'thirty seconds',  'after he was',
+      'knocked down,',   'he is',           'considered',      'beaten.',
+      '',                '3. That in the',  'main matches no', 'one can enter',
+      'the place of',    'the same (ring)', ', except for',    'the contestants',
+      'and their “',     'seconds”; The',   'same rule',       'applies to',
+      'preliminary',     'bouts, but in',   'the latter, the', 'referee is',
+      'allowed, as',     'long as he does', 'not interfere',   'in the bout, to',
+      'enter the',       'place of the',    'bout, to ask',    'for correction',
+      'and to demand',   'that the',        'spectators take', 'their places ;',
+      'Anyone who',      'violates these',  'rules will be',   'expelled from',
+      'the place of',    'the fight. When', 'the wrestlers',   'are ready for',
+      'the fight and',   'before the',      'start of the',    'fight, the',
+      'place where it',  'is held (ring)',  'must be vacated', '.'
+    ]
+  )
+  a.equal(charWidth, 15)
 })
 
 export { test, only, skip }
