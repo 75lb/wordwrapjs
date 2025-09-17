@@ -1,4 +1,4 @@
-import wrap from 'wordwrapjs'
+import { wrap } from 'wordwrapjs'
 import { strict as a } from 'assert'
 import stringWidth from 'string-width'
 

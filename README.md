@@ -10,7 +10,7 @@ Multi-lingual word wrapping for plain text. Requires Node v16 for Intl.Segmenter
 
 ## Synopsis
 
-TODO.
+TODO. [API Docs](./docs/api.md).
 
 ## Load anywhere
 
