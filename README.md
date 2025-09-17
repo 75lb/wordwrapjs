@@ -6,56 +6,17 @@
 
 # wordwrapjs
 
-Word wrapping for plain text.
+Multi-lingual word wrapping for plain text. Requires Node v16 for Intl.Segmenter support.
 
 ## Synopsis
 
-Wrap some text in a 20 character column.
-
-```js
-import wordwrap from 'wordwrapjs'
-
-const text = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
-const result = wordwrap.wrap(text, { width: 20 })
-```
-
-`result` now looks like this:
-```
-Lorem ipsum dolor
-sit amet,
-consectetur
-adipiscing elit, sed
-do eiusmod tempor
-incididunt ut labore
-et dolore magna
-aliqua.
-```
-
-Force long words to wrap by setting the `break` flag.
-
-```
-Welcome to Node.js v16.6.2.
-> wrap = require('wordwrapjs')
-
-> url = 'https://github.com/75lb/wordwrapjs'
-> wrap.lines(url, { width: 18 })
-[ 'https://github.com/75lb/wordwrapjs' ]
-
-> wrap.lines(url, { width: 18, break: true })
-[ 'https://github.com', '/75lb/wordwrapjs' ]
-```
+TODO.
 
 ## Load anywhere
 
-This library is compatible with Node.js, the Web and any style of module loader. It can be loaded anywhere, natively without transpilation.
+This library is compatible with Node.js and the Web. It can be loaded anywhere, natively without transpilation.
 
-Node.js:
-
-```js
-const wordwrap = require('wordwrapjs')
-```
-
-Within Node.js:
+ECMAScript Module within Node.js:
 
 ```js
 import wordwrap from 'wordwrapjs'
