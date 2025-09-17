@@ -8,6 +8,11 @@ import Column from './lib/column.js'
  * @param options {object} - Options
  * @param options.locale {string} - Locale
  * @param options.granularity {string} - Gran
+ * @param options.width {number} - Number
+ * @param options.widthMode {string} - 'char' or 'visual'
+ * @param options.pad {boolean} - Set to true to pad each column cell so its width matches options.width
+ * @param options.rtol {boolean} - Set to true if padding a rtol language.
+ * @param options.noWrap {boolean} - Set to true to disable wrapping per segment
  * @alias module:wordwrapjs
  */
 function wrap (text = '', options = {}) {
@@ -19,10 +24,6 @@ function wrap (text = '', options = {}) {
   return column.lines
 }
 
-/**
- * @param {string}
- * @param {object} - Options
- */
 function segment (text, options = {}) {
   const locale = options.locale
   const granularity = options.granularity || 'word' // grapheme, word, sentence
