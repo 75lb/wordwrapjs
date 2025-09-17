@@ -7,8 +7,7 @@
   "license": "MIT",
   "type": "module",
   "exports": {
-    ".": "./index.js",
-    "./column": "./lib/column.js"
+    ".": "./index.js"
   },
   "keywords": [
     "word",
@@ -20,12 +19,12 @@
     "word-wrap"
   ],
   "engines": {
-    "node": ">=12.20"
+    "node": ">=16"
   },
   "scripts": {
     "test": "npm run test:ci",
     "test:ci": "75lb-nature test-runner test/test.js",
-    "docs": "75lb-nature jsdoc2md -t README.hbs index.js > README.md"
+    "docs": "75lb-nature jsdoc2md index.js > docs/api.md"
   },
   "files": [
     "index.js",

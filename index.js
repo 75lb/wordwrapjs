@@ -1,5 +1,15 @@
-import Column from 'wordwrapjs/column'
+/**
+ * @module wordwrapjs
+ */
+import Column from './lib/column.js'
 
+/**
+ * @param {string}
+ * @param options {object} - Options
+ * @param options.locale {string} - Locale
+ * @param options.granularity {string} - Gran
+ * @alias module:wordwrapjs
+ */
 function wrap (text = '', options = {}) {
   const column = new Column(options)
   for (const s of segment(text, options)) {
@@ -9,6 +19,10 @@ function wrap (text = '', options = {}) {
   return column.lines
 }
 
+/**
+ * @param {string}
+ * @param {object} - Options
+ */
 function segment (text, options = {}) {
   const locale = options.locale
   const granularity = options.granularity || 'word' // grapheme, word, sentence
@@ -16,4 +30,4 @@ function segment (text, options = {}) {
   return Array.from(segmenter.segment(text))
 }
 
-export { wrap, segment }
+export default wrap

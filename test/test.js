@@ -1,4 +1,4 @@
-import { wrap, segment } from 'wordwrapjs'
+import wrap from 'wordwrapjs'
 import { strict as a } from 'assert'
 import stringWidth from 'string-width'
 
@@ -57,7 +57,6 @@ test.set('width smaller than some words: words not split', function () {
 test.set('grapheme: words split', function () {
   const fixture = 'That no contestant will be considered defeated.'
   const result = wrap(fixture, { width: 3, granularity: 'grapheme' })
-  // console.dir(result, { showHidden: true, depth: null, colors: true })
   a.deepEqual(
     result,
     [
@@ -76,7 +75,6 @@ test.set('grapheme: words split', function () {
 test.set('respect existing linebreaks', function () {
   const fixture = 'one\ntwo three four'
   const result = wrap(fixture, { width: 3 })
-  // console.dir(result, { showHidden: true, depth: null, colors: true })
   a.deepEqual(
     result,
     ['one', 'two', 'three', 'four']
@@ -86,7 +84,6 @@ test.set('respect existing linebreaks', function () {
 test.set('respect existing linebreaks 2', function () {
   const fixture = 'one\n\ntwo three four'
   const result = wrap(fixture, { width: 3 })
-  // console.dir(result, { showHidden: true, depth: null, colors: true })
   a.deepEqual(
     result,
     ['one', '', 'two', 'three', 'four']
@@ -103,8 +100,6 @@ test.set('Simplified Chinese with both full and half width chars', function () {
   const result = wrap(fixture, { width: 10 })
   const charWidth = Math.max(...result.map(l => l.length))
   const visualWidth = Math.max(...result.map(l => stringWidth(l)))
-  // console.log(charWidth, visualWidth)
-  // console.log(result)
   a.deepEqual(
     result,
     [
@@ -136,8 +131,6 @@ test.set('Simplified Chinese with both full and half width chars, widthMode: vis
   const result = wrap(fixture, { width: 10, widthMode: 'visual' })
   const charWidth = Math.max(...result.map(l => l.length))
   const visualWidth = Math.max(...result.map(l => stringWidth(l)))
-  // console.log(charWidth, visualWidth)
-  // console.log(result)
   a.deepEqual(
     result,
     [
@@ -167,8 +160,6 @@ test.set('Mixed languages, widthMode: visual', function () {
   const result = wrap(arabic + eng2 + chi2, { width: 12, widthMode: 'visual' })
   const charWidth = Math.max(...result.map(l => l.length))
   const visualWidth = Math.max(...result.map(l => stringWidth(l)))
-  // console.log(charWidth, visualWidth)
-  // console.log(result)
   a.deepEqual(
     result,
     [
@@ -197,7 +188,6 @@ test.set('Longer example', function () {
 3. That in the main matches no one can enter the place of the same (ring), except for the contestants and their “seconds”; The same rule applies to preliminary bouts, but in the latter, the referee is allowed, as long as he does not interfere in the bout, to enter the place of the bout, to ask for correction and to demand that the spectators take their places ; Anyone who violates these rules will be expelled from the place of the fight. When the wrestlers are ready for the fight and before the start of the fight, the place where it is held (ring) must be vacated.`
   const result = wrap(fixture, { width: 15 })
   const charWidth = Math.max(...result.map(l => l.length))
-  // console.log(result)
   a.deepEqual(
     result,
     [
