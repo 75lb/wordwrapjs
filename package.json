@@ -1,7 +1,7 @@
 {
   "name": "wordwrapjs",
   "author": "Lloyd Brookes <opensource@75lb.com>",
-  "version": "5.1.0",
+  "version": "5.1.1",
   "description": "Word-wrapping for javascript.",
   "repository": "https://github.com/75lb/wordwrapjs",
   "license": "MIT",
@@ -27,8 +27,7 @@
     "docs": "75lb-nature jsdoc2md -t README.hbs index.js > README.md",
     "dist": "75lb-nature cjs-build index.js && 75lb-nature simple-rollup index.js"
   },
-  "devDependencies": {
-  },
+  "devDependencies": {},
   "files": [
     "index.js",
     "dist"
