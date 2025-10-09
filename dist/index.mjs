@@ -16,6 +16,8 @@ const re = {
   ansiEscapeSequence: /\u001b.*?m/g
 };
 
+const EMPTY_LINE = Symbol('emptyLine');
+
 /**
  * @alias module:wordwrapjs
  * @typicalname wordwrap
@@ -38,8 +40,11 @@ class Wordwrap {
     /* trim each line of the supplied text */
     return this._lines.map(trimLine, this)
 
-      /* split each line into an array of chunks, else mark it empty */
-      .map(line => line.match(re.chunk) || ['~~empty~~'])
+      /* split each line into an array of chunks, else mark it empty with a symbol */
+      .map(line => {
+        const chunks = line.match(re.chunk);
+        return chunks && chunks.length ? chunks : [EMPTY_LINE]
+      })
 
       /* optionally, break each word on the line into pieces */
       .map(lineWords => this.options.break
@@ -50,6 +55,11 @@ class Wordwrap {
 
       /* transforming the line of words to one or more new lines wrapped to size */
       .map(lineWords => {
+        /* if the line is the EMPTY_LINE symbol, preserve it */
+        if (lineWords.length === 1 && lineWords[0] === EMPTY_LINE) {
+          return lineWords
+        }
+
         return lineWords
           .reduce((lines, word) => {
             const currentLine = lines[lines.length - 1];
@@ -64,13 +74,14 @@ class Wordwrap {
       .flat()
 
       /* trim the wrapped lines */
-      .map(trimLine, this)
+      .map(line => (line === EMPTY_LINE ? '' : trimLine.call(this, line)))
 
-      /* filter out empty lines */
-      .filter(line => line.trim())
-
-      /* restore the user's original empty lines */
-      .map(line => line.replace('~~empty~~', ''))
+      /* filter out empty lines except those that were originally empty */
+      .filter((line, idx) => {
+        return line !== ''
+          || this._lines[idx] === ''
+          || (typeof this._lines[idx] !== 'undefined' && this._lines[idx].match(/^\s*$/))
+      })
   }
 
   wrap () {
@@ -134,6 +145,10 @@ function replaceAnsi (string) {
  * @private
  */
 function breakWord (word) {
+  if (word === EMPTY_LINE) {
+    return word
+  }
+
   if (replaceAnsi(word).length > this.options.width) {
     const letters = word.split('');
     let piece;

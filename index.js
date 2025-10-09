@@ -77,11 +77,11 @@ class Wordwrap {
       .map(line => (line === EMPTY_LINE ? '' : trimLine.call(this, line)))
 
       /* filter out empty lines except those that were originally empty */
-      .filter((line, idx) =>
-        line !== '' ||
-        this._lines[idx] === '' ||
-        this._lines[idx]?.match(/^\s*$/)
-      )
+      .filter((line, idx) => {
+        return line !== ''
+          || this._lines[idx] === ''
+          || (typeof this._lines[idx] !== 'undefined' && this._lines[idx].match(/^\s*$/))
+      })
   }
 
   wrap () {
