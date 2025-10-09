@@ -101,6 +101,15 @@ test.set('wordwrap.lines(text): respect existing linebreaks', function () {
     wordwrap.lines('one\r\ntwo three four', { width: 8 }),
     ['one', 'two', 'three', 'four']
   )
+
+  a.deepEqual(wordwrap.lines('\n\n\n\n\n', { break: true, width: 5 }), [
+    '', // \n
+    '', // \n
+    '', // \n
+    '', // \n
+    '', // \n
+    ''
+  ])
 })
 
 test.set('wordwrap.lines(text): multilingual', function () {
